@@ -5,18 +5,28 @@ on:
     branches:
       - main
 jobs:
-  build:
+  build_and_test:
     runs-on: ubuntu-latest
+
+    env:
+      Solution: '../TECH_CHALLENGE.sln'
+      Main: '../ContatosAPI/ContatosAPI.csproj'
+      Test: '../TECH_CHALLENGE.Tests/TECH_CHALLENGE.Tests.csproj'
+    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Build
-        run: make
-      - name: Test
-        run: make test
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy
-        run: make deploy
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '7.x'
+
+    - name: Restore dependencies
+      run: dotnet restore <Solution>
+
+    - name: Build main project
+      run: dotnet build <Main> --no-restore --configuration Release
+
+    - name: Run tests
+      run: dotnet test <Test> --no-build --verbosity normal --configuration Release
