@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 
-namespace TECH_CHALLENGE.Tests.Controllers
+namespace TECH_CHALLENGE_Tests.Controllers
 {
     public class UsuariosControllerTests
     {

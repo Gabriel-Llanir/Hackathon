@@ -11,7 +11,7 @@ jobs:
     env:
       Solution: './TECH_CHALLENGE.sln'
       Main: './ContatosAPI/ContatosAPI.csproj'
-      Test: './TECH_CHALLENGE.Tests/TECH_CHALLENGE.Tests.csproj'
+      Test: './TECH_CHALLENGE_Tests/TECH_CHALLENGE_Tests.csproj'
     
     steps:
     - name: Checkout code

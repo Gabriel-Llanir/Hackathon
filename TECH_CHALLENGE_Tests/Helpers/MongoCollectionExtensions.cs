@@ -4,7 +4,7 @@ using Moq.Language.Flow;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace TECH_CHALLENGE.Tests.Helpers
+namespace TECH_CHALLENGE_Tests.Helpers
 {
     public static class MongoCollectionExtensions
     {

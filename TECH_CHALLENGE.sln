@@ -5,7 +5,7 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContatosAPI", "ContatosAPI\ContatosAPI.csproj", "{6D4E9EE8-81DC-4664-9AF1-0F43A5FA4EB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TECH_CHALLENGE.Tests", "TECH_CHALLENGE.Tests\TECH_CHALLENGE.Tests.csproj", "{7D71D2AF-A8D4-4232-BE94-282794275CA0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TECH_CHALLENGE_Tests", "TECH_CHALLENGE_Tests\TECH_CHALLENGE_Tests.csproj", "{7D71D2AF-A8D4-4232-BE94-282794275CA0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

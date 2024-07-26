@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 
-namespace TECH_CHALLENGE.Tests
+namespace TECH_CHALLENGE_Tests
 {
     public class SampleTests
     {
