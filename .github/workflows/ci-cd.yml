@@ -11,7 +11,6 @@ jobs:
     env:
       Solution: './TECH_CHALLENGE.sln'
       Main: './ContatosAPI/ContatosAPI.csproj'
-      Test: './TECH_CHALLENGE.Tests/TECH_CHALLENGE.Tests.csproj'
     
     steps:
     - name: Checkout code
@@ -20,7 +19,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '8.0'
+        dotnet-version: '7.x'
 
     - name: Restore dependencies
       run: dotnet restore ${{ env.Solution }}
@@ -32,4 +31,4 @@ jobs:
       run: ls -la ./TECH_CHALLENGE.Tests/
 
     - name: Run tests
-      run: dotnet test ${{ env.Test }} --no-build --verbosity normal --configuration Release
+      run: dotnet test './TECH_CHALLENGE.Tests/TECH_CHALLENGE.Tests.csproj' --no-build --verbosity detailed --configuration Release
