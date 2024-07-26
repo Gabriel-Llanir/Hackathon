@@ -7,10 +7,10 @@ using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
-using TECH_CHALLENGE_Tests.Helpers;
+using TECH_CHALLENGE.Tests.Helpers;
 using System.Threading;
 
-namespace TECH_CHALLENGE_Tests.Repositories
+namespace TECH_CHALLENGE.Tests.Repositories
 {
     public class UsuarioRepositoryTests
     {

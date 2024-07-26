@@ -11,7 +11,7 @@ jobs:
     env:
       Solution: './TECH_CHALLENGE.sln'
       Main: './ContatosAPI/ContatosAPI.csproj'
-      Test: './TECH_CHALLENGE_Tests/TECH_CHALLENGE_Tests.csproj'
+      Test: './TECH_CHALLENGE.Tests/TECH_CHALLENGE.Tests.csproj'
     
     steps:
     - name: Checkout code
@@ -27,6 +27,9 @@ jobs:
 
     - name: Build main project
       run: dotnet build ${{ env.Main }} --no-restore --configuration Release
+
+    - name: List directory contents
+      run: ls -la ./TECH_CHALLENGE.Tests/
 
     - name: Run tests
       run: dotnet test ${{ env.Test }} --no-build --verbosity normal --configuration Release
