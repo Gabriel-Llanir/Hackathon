@@ -23,10 +23,10 @@ jobs:
         dotnet-version: '7.x'
 
     - name: Restore dependencies
-      run: dotnet restore <Solution>
+      run: dotnet restore ${{ env.Solution }}
 
     - name: Build main project
-      run: dotnet build <Main> --no-restore --configuration Release
+      run: dotnet build ${{ env.Main }} --no-restore --configuration Release
 
     - name: Run tests
-      run: dotnet test <Test> --no-build --verbosity normal --configuration Release
+      run: dotnet test ${{ env.Test }} --no-build --verbosity normal --configuration Release
