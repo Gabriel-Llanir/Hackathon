@@ -8,10 +8,23 @@ jobs:
   build_and_test:
     runs-on: ubuntu-latest
 
+    services:
+      mongo:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+        options: >
+          --health-cmd "echo 'db.runCommand({ ping: 1 })' | mongo --quiet" 
+          --health-interval 10s 
+          --health-timeout 5s 
+          --health-retries 5
+
     env:
       Solution: ${{ vars.SOLUTION_PATH }}
       Main: ${{ vars.MAIN_PROJECT_PATH }}
-      Test: ${{ vars.TEST_PROJECT_PATH }}
+      UnitTest: ${{ vars.UNIT_TEST_PROJECT_PATH }}
+      IntegrationTest: ${{ vars.INTEGRATION_TEST_PROJECT_PATH }}
+      TestDataBase: ${{ vars.TEST_DATABASE_URL }}
     
     steps:
     - name: Checkout code
@@ -28,8 +41,16 @@ jobs:
     - name: Build main project
       run: dotnet build ${{ env.Main }} --no-restore --configuration Release
       
-    - name: Build test project
-      run: dotnet build ${{ env.Test }} --no-restore --configuration Release
+    - name: Build Test projects
+      run: |
+        dotnet build ${{ env.UnitTest }} --no-restore --configuration Release
+        dotnet build ${{ env.IntegrationTest }} --no-restore --configuration Release
 
-    - name: Run tests
-      run: dotnet test ${{ env.Test }} --no-build --verbosity detailed --configuration Release
+    - name: Run Unit Tests
+      run: dotnet test ${{ env.UnitTest }} --no-build --verbosity normal --configuration Release
+
+    - name: Run Integration Tests
+      run: dotnet test ${{ env.IntegrationTest }} --no-build --verbosity normal --configuration Release
+
+
+
