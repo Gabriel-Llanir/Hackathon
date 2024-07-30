@@ -46,4 +46,3 @@ jobs:
 
     - name: Run Integration Tests
       run: dotnet test ${{ env.IntegrationTest }} --no-build --verbosity normal --configuration Release
-

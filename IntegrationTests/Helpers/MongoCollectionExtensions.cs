@@ -11,7 +11,7 @@ namespace IntegrationTests.Helpers
         #region | Primary Test DataBase 
         public static string Get_Test_DB_URL()
         {
-            return Environment.GetEnvironmentVariable("MONGO_URL") ?? GetSecondary_DataBase_URL();
+            return Environment.GetEnvironmentVariable("TestDataBase") ?? GetSecondary_DataBase_URL();
         }
         #endregion
 
