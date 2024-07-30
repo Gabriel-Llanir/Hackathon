@@ -11,7 +11,7 @@ namespace IntegrationTests.Helpers
         #region | Primary Test DataBase 
         public static string Get_Test_DB_URL()
         {
-            return Environment.GetEnvironmentVariable("MONGO_URL") ?? "mongodb://localhost:27017/testdb";
+            return Environment.GetEnvironmentVariable("MONGO_URL") ?? GetSecondary_DataBase_URL();
         }
         #endregion
 
@@ -23,6 +23,11 @@ namespace IntegrationTests.Helpers
             CancellationToken cancellationToken = default)
         {
             return mock.Setup(x => x.FindAsync(filter, options, cancellationToken));
+        }
+
+        public static string GetSecondary_DataBase_URL()
+        {
+            return "";
         }
         #endregion
     }

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ContatosAPI.Models;
 using ContatosAPI.Services;
+using Prometheus;
 
 namespace ContatosAPI.Controllers
 {
@@ -12,6 +13,9 @@ namespace ContatosAPI.Controllers
     {
         private readonly IUsuarioService _usuarioService;
 
+        private static readonly Histogram RequestDuration = Metrics.CreateHistogram("http_request_duration_seconds", "Duration of HTTP requests in seconds", new HistogramConfiguration { LabelNames = ["method", "endpoint"] });
+        private static readonly Counter RequestCounter = Metrics.CreateCounter("http_requests_total", "Total number of HTTP requests made", new CounterConfiguration { LabelNames = ["method", "endpoint", "status"] });
+
         public UsuariosController(IUsuarioService usuarioService)
         {
             _usuarioService = usuarioService;
@@ -20,16 +24,35 @@ namespace ContatosAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios()
         {
-            var usuarios = await _usuarioService.GetAllAsync();
-            return Ok(usuarios);
+            using (RequestDuration.WithLabels("GET", "api/Usuarios").NewTimer())
+            {
+                var usuarios = await _usuarioService.GetAllAsync();
+
+                var response = Ok(usuarios);
+                RequestCounter.WithLabels("GET", "api/Usuarios", response.StatusCode.ToString()).Inc();
+
+                return response;
+            }
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUsuario(int id)
         {
-            var usuario = await _usuarioService.GetByIdAsync(id);
-            if (usuario == null) return NotFound();
-            return Ok(usuario);
+            using (RequestDuration.WithLabels("GET", "api/Usuarios/{id}").NewTimer())
+            {
+                var usuario = await _usuarioService.GetByIdAsync(id);
+
+                if (usuario == null)
+                {
+                    RequestCounter.WithLabels("GET", "api/Usuarios/{id}", NotFound().StatusCode.ToString()).Inc();
+                 
+                    return NotFound();
+                }
+
+                RequestCounter.WithLabels("GET", "api/Usuarios/{id}", Ok(usuario).StatusCode.ToString()).Inc();
+
+                return Ok(usuario);
+            }
         }
 
         [HttpGet("search")]
@@ -64,11 +87,22 @@ namespace ContatosAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var existingUsuario = await _usuarioService.GetByIdAsync(id);
-            if (existingUsuario == null) return NotFound();
+            using (RequestDuration.WithLabels("DELETE", "api/Usuarios/{id}").NewTimer())
+            {
+                var existingUsuario = await _usuarioService.GetByIdAsync(id);
 
-            await _usuarioService.RemoveAsync(id);
-            return NoContent();
+                if (existingUsuario == null)
+                {
+                    RequestCounter.WithLabels("DELETE", "api/Usuarios/{id}", NotFound().StatusCode.ToString()).Inc();
+
+                    return NotFound();
+                }
+
+                RequestCounter.WithLabels("DELETE", "api/Usuarios/{id}", NoContent().StatusCode.ToString()).Inc();
+
+                await _usuarioService.RemoveAsync(id);
+                return NoContent();
+            }
         }
 
     }

@@ -10,6 +10,7 @@ using ContatosAPI.Services;
 using ContatosAPI.Validators;
 using ContatosAPI.Migrations;
 using FluentValidation;
+using Prometheus;
 
 namespace ContatosAPI
 {
@@ -45,6 +46,9 @@ namespace ContatosAPI
             }
 
             app.UseHttpsRedirection();
+
+            app.UseMetricServer();
+            app.UseHttpMetrics();
 
             app.UseRouting();
 
