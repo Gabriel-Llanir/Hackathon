@@ -16,6 +16,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Consulta\Consulta.csproj" />
+    <ProjectReference Include="..\DeleteConsumer\DeleteConsumer.csproj" />
+    <ProjectReference Include="..\RegisterConsumer\RegisterConsumer.csproj" />
+    <ProjectReference Include="..\UpdateConsumer\UpdateConsumer.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,23 +1,31 @@
-﻿using Xunit;
-using Moq;
-using Consulta.Services;
+﻿using Moq;
 using Consulta.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Linq;
+using Consulta.Services;
 using Consulta.Repositories;
+using RegisterRepository = RegisterConsumer.Repositories.IUsuarioRepository;
+using RegisterUsuario = RegisterConsumer.Models.Usuario;
+using RegisterUsuarioService = RegisterConsumer.Services.UsuarioService;
+using UpdateRepository = UpdateConsumer.Repositories.IUsuarioRepository;
+using UpdateUsuario = UpdateConsumer.Models.Usuario;
+using UpdateUsuarioService = UpdateConsumer.Services.UsuarioService;
+using DeleteRepository = DeleteConsumer.Repositories.IUsuarioRepository;
+using DeleteUsuarioService = DeleteConsumer.Services.UsuarioService;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
-namespace TECH_CHALLENGE.Tests.Services
+namespace TECH_CHALLENGE.Services
 {
     public class UsuarioServiceTests
     {
         [Fact]
         public async Task AddUsuario_AddsUsuario()
         {
-            var mockRepository = new Mock<IUsuarioRepository>();
-            var usuario = new Usuario { IdUsuario = 1, Nome = "Teste1", Telefone = "11999999999", Email = "teste1@example.com" };
+            var mockRepository = new Mock<RegisterRepository>();
+            var usuario = new RegisterUsuario { IdUsuario = 1, Nome = "Teste1", Telefone = "11999999999", Email = "teste1@example.com" };
             mockRepository.Setup(repo => repo.AddAsync(usuario)).Returns(Task.CompletedTask);
-            var service = new UsuarioService(mockRepository.Object);
+            var service = new RegisterUsuarioService(mockRepository.Object);
 
             await service.AddAsync(usuario);
 
@@ -39,11 +47,11 @@ namespace TECH_CHALLENGE.Tests.Services
         [Fact]
         public async Task UpdateUsuario_UpdatesUsuario()
         {
- 
-            var mockRepository = new Mock<IUsuarioRepository>();
-            var usuario = new Usuario { IdUsuario = 1, Nome = "Teste Atualizado", Telefone = "11999999999", Email = "teste.atualizado@example.com" };
+
+            var mockRepository = new Mock<UpdateRepository>();
+            var usuario = new UpdateUsuario { IdUsuario = 1, Nome = "Teste Atualizado", Telefone = "11999999999", Email = "teste.atualizado@example.com" };
             mockRepository.Setup(repo => repo.UpdateAsync(usuario.IdUsuario, usuario)).Returns(Task.CompletedTask);
-            var service = new UsuarioService(mockRepository.Object);
+            var service = new UpdateUsuarioService(mockRepository.Object);
 
             await service.UpdateAsync(usuario.IdUsuario, usuario);
 
@@ -53,10 +61,10 @@ namespace TECH_CHALLENGE.Tests.Services
         [Fact]
         public async Task RemoveUsuario_RemovesUsuario()
         {
-            var mockRepository = new Mock<IUsuarioRepository>();
+            var mockRepository = new Mock<DeleteRepository>();
             var usuarioId = 1;
             mockRepository.Setup(repo => repo.RemoveAsync(usuarioId)).Returns(Task.CompletedTask);
-            var service = new UsuarioService(mockRepository.Object);
+            var service = new DeleteUsuarioService(mockRepository.Object);
 
             await service.RemoveAsync(usuarioId);
 
