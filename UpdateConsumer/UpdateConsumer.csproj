@@ -12,4 +12,8 @@
     <PackageReference Include="MongoDB.Driver" Version="2.29.0" />
     <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ContatosAPI\Gateway.csproj" />
+  </ItemGroup>
 </Project>
