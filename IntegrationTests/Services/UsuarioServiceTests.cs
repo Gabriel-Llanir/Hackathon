@@ -1,8 +1,8 @@
 ﻿using Xunit;
 using Moq;
-using ContatosAPI.Repositories;
-using ContatosAPI.Services;
-using ContatosAPI.Models;
+using Consulta.Repositories;
+using Consulta.Services;
+using Consulta.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;

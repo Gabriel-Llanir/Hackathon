@@ -1,47 +1,40 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using ContatosAPI.Models;
-using ContatosAPI.Repositories;
+﻿using Gateway.Models;
 
-namespace ContatosAPI.Services
+namespace Gateway.Services
 {
-    public class UsuarioService : IUsuarioService
+    public class UsuarioService(HttpClient httpClient, IHttpContextAccessor httpContextAccessor) : IUsuarioService
     {
-        private readonly IUsuarioRepository _usuarioRepository;
-
-        public UsuarioService(IUsuarioRepository usuarioRepository)
-        {
-            _usuarioRepository = usuarioRepository;
-        }
+        private readonly HttpClient _httpClient = httpClient;
+        private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
+        private readonly string _urlConsultaAPI = "https://localhost:5010";
 
         public async Task<IEnumerable<Usuario>> GetAllAsync()
         {
-            return await _usuarioRepository.GetAllAsync();
+            var response = await _httpClient.GetAsync($"{_urlConsultaAPI}/Consulta");
+            response.EnsureSuccessStatusCode();
+
+            var usuario = await response.Content.ReadFromJsonAsync<IEnumerable<Usuario>>();
+
+            return usuario;
         }
 
         public async Task<IEnumerable<Usuario>> GetAllAsync(string DDD)
         {
-            return await _usuarioRepository.GetAllAsync(DDD);
+            var response = await _httpClient.GetAsync($"{_urlConsultaAPI}/{DDD}");
+            response.EnsureSuccessStatusCode();
+
+            var usuario = await response.Content.ReadFromJsonAsync<IEnumerable<Usuario>>();
+
+            return usuario;
         }
 
         public async Task<Usuario> GetByIdAsync(int id)
         {
-            return await _usuarioRepository.GetByIdAsync(id);
-        }
+            var response = await _httpClient.GetAsync($"{_urlConsultaAPI}/{id}");
+            response.EnsureSuccessStatusCode();
 
-        public async Task AddAsync(Usuario usuario)
-        {
-            await _usuarioRepository.AddAsync(usuario);
-        }
-
-        public async Task UpdateAsync(int id, Usuario usuarioIn)
-        {
-            await _usuarioRepository.UpdateAsync(id, usuarioIn);
-        }
-
-        public async Task RemoveAsync(int id)
-        {
-            await _usuarioRepository.RemoveAsync(id);
+            var usuario = await response.Content.ReadFromJsonAsync<Usuario>();
+            return usuario;
         }
     }
 }

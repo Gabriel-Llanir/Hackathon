@@ -1,14 +1,8 @@
-﻿using Xunit;
-using Moq;
-using ContatosAPI.Repositories;
-using ContatosAPI.Data;
-using ContatosAPI.Models;
+﻿using Moq;
+using Consulta.Repositories;
+using Consulta.Data;
+using Consulta.Models;
 using MongoDB.Driver;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Linq;
-using IntegrationTests.Helpers;
-using System.Threading;
 
 namespace IntegrationTests.Repositories
 {

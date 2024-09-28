@@ -1,13 +1,12 @@
 ﻿using Xunit;
 using Moq;
-using ContatosAPI.Repositories;
-using ContatosAPI.Data;
-using ContatosAPI.Models;
+using Consulta.Repositories;
+using Consulta.Data;
+using Consulta.Models;
 using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
-using TECH_CHALLENGE.Tests.Helpers;
 using System.Threading;
 
 namespace TECH_CHALLENGE.Tests.Repositories

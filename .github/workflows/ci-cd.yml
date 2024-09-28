@@ -16,7 +16,11 @@ jobs:
 
     env:
       Solution: ${{ vars.SOLUTION_PATH }}
-      Main: ${{ vars.MAIN_PROJECT_PATH }}
+      Gateway: ${{ vars.GATEWAY_API_PATH }}
+      Consulta: ${{ vars.CONSULTA_API_PATH }}
+      Register: ${{ vars.REGISTER_CONSUMER_PATH }}
+      Update: ${{ vars.UPDATE_CONSUMER_PATH }}
+      Delete: ${{ vars.DELETE_CONSUMER_PATH }}
       UnitTest: ${{ vars.UNIT_TEST_PROJECT_PATH }}
       IntegrationTest: ${{ vars.INTEGRATION_TEST_PROJECT_PATH }}
       TestDataBase: ${{ vars.TEST_DATABASE_URL }}
@@ -33,8 +37,16 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore ${{ env.Solution }}
 
-    - name: Build main project
-      run: dotnet build ${{ env.Main }} --no-restore --configuration Release
+    - name: Build API projects
+      run: |
+        dotnet build ${{ env.Gateway }} --no-restore --configuration Release
+        dotnet build ${{ env.Consulta }} --no-restore --configuration Release
+
+    - name: Build Consumer projects
+      run: |
+        dotnet build ${{ env.Register }} --no-restore --configuration Release
+        dotnet build ${{ env.Update }} --no-restore --configuration Release
+        dotnet build ${{ env.Delete }} --no-restore --configuration Release
       
     - name: Build Test projects
       run: |

@@ -1,8 +1,8 @@
 ﻿using Xunit;
 using Moq;
-using ContatosAPI.Controllers;
-using ContatosAPI.Services;
-using ContatosAPI.Models;
+using Consulta.Controllers;
+using Consulta.Services;
+using Consulta.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;

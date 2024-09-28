@@ -1,11 +1,11 @@
 ﻿using Xunit;
 using Moq;
-using ContatosAPI.Repositories;
-using ContatosAPI.Services;
-using ContatosAPI.Models;
+using Consulta.Services;
+using Consulta.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using Consulta.Repositories;
 
 namespace TECH_CHALLENGE.Tests.Services
 {
