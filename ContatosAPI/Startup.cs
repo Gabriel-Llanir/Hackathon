@@ -8,7 +8,7 @@ namespace Gateway
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpClient();
-
+            
             services.AddScoped<IUsuarioService, UsuarioService>();
             services.AddHttpContextAccessor();
 
