@@ -7,24 +7,24 @@ namespace Consulta.Models
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        public required string Id { get; set; }
 
         [BsonElement("idUsuario")]
         public int IdUsuario { get; set; }
 
         [BsonElement("sNome")]
-        public string Nome { get; set; }
+        public required string Nome { get; set; }
 
         [BsonElement("sTelefone")]
-        public string Telefone { get; set; }
+        public required string Telefone { get; set; }
 
         [BsonElement("sEmail")]
-        public string Email { get; set; }
+        public required string Email { get; set; }
 
         [BsonElement("dtAtualizacao")]
         public DateTime Atualizacao { get; set; }
 
         [BsonElement("sCodigoRegiao")]
-        public string CodigoRegiao { get; set; }
+        public required string CodigoRegiao { get; set; }
     }
 }
