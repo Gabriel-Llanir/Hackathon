@@ -11,6 +11,10 @@ namespace Gateway.Services
         public async Task<IEnumerable<Usuario>> GetAllAsync()
         {
             var response = await _httpClient.GetAsync($"{_urlConsultaAPI}/Consulta");
+
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                return null;
+
             response.EnsureSuccessStatusCode();
 
             var usuario = await response.Content.ReadFromJsonAsync<IEnumerable<Usuario>>();
@@ -20,7 +24,11 @@ namespace Gateway.Services
 
         public async Task<IEnumerable<Usuario>> GetAllAsync(string DDD)
         {
-            var response = await _httpClient.GetAsync($"{_urlConsultaAPI}/{DDD}");
+            var response = await _httpClient.GetAsync($"{_urlConsultaAPI}/Consulta/DDD/{DDD}");
+
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                return null;
+
             response.EnsureSuccessStatusCode();
 
             var usuario = await response.Content.ReadFromJsonAsync<IEnumerable<Usuario>>();
@@ -30,7 +38,11 @@ namespace Gateway.Services
 
         public async Task<Usuario> GetByIdAsync(int id)
         {
-            var response = await _httpClient.GetAsync($"{_urlConsultaAPI}/{id}");
+            var response = await _httpClient.GetAsync($"{_urlConsultaAPI}/Consulta/{id}");
+
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                return null;
+
             response.EnsureSuccessStatusCode();
 
             var usuario = await response.Content.ReadFromJsonAsync<Usuario>();

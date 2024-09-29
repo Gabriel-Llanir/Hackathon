@@ -38,6 +38,7 @@ namespace Gateway.Controllers
                 var usuarios = await _usuarioService.GetAllAsync();
 
                 var response = Ok(usuarios);
+
                 RequestCounter.WithLabels("GET", "api", response.StatusCode.ToString()).Inc();
 
                 return response;
@@ -64,56 +65,73 @@ namespace Gateway.Controllers
             }
         }
 
-        [HttpGet("DDD")]
-        public async Task<IActionResult> GetUsuariosByDDD([FromQuery] string DDD)
+        [HttpGet("DDD/{DDD}")]
+        public async Task<IActionResult> GetUsuariosByDDD(string DDD)
         {
-            var usuarios = await _usuarioService.GetAllAsync(DDD);
-            if (!(usuarios.Count() > 1)) return NotFound();
-            return Ok(usuarios);
+            using (RequestDuration.WithLabels("GET", "api/DDD/{DDD}").NewTimer())
+            {
+                var usuarios = await _usuarioService.GetAllAsync(DDD);
+
+                if (!(usuarios.Count() > 1)) return NotFound();
+
+                RequestCounter.WithLabels("GET", "api/DDD/{DDD}", Ok(usuarios).StatusCode.ToString()).Inc();
+
+                return Ok(usuarios);
+            }
         }
 
         [HttpPost]
         public IActionResult Post([FromBody] Usuario usuario)
         {
-            using (var channel = factory.CreateConnection().CreateModel())
+            using (RequestDuration.WithLabels("POST", "api").NewTimer())
             {
-                channel.QueueDeclare(
-                    queue: "RegisterQueue",
-                    durable: true,
-                    exclusive: false,
-                    autoDelete: false,
-                    arguments: null);
+                using (var channel = factory.CreateConnection().CreateModel())
+                {
+                    channel.QueueDeclare(
+                        queue: "RegisterQueue",
+                        durable: true,
+                        exclusive: false,
+                        autoDelete: false,
+                        arguments: null);
 
-                channel.BasicPublish(
-                    exchange: "",
-                    routingKey: "RegisterQueue",
-                    basicProperties: null,
-                    body: Encoding.UTF8.GetBytes(JsonSerializer.Serialize(usuario)));
+                    channel.BasicPublish(
+                        exchange: "",
+                        routingKey: "RegisterQueue",
+                        basicProperties: null,
+                        body: Encoding.UTF8.GetBytes(JsonSerializer.Serialize(usuario)));
+                }
+
+                RequestCounter.WithLabels("GET", "api", Created().StatusCode.ToString()).Inc();
+
+                return Created();
             }
-
-            return Created();
         }
 
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Usuario usuario)
         {
-            using (var channel = factory.CreateConnection().CreateModel())
+            using (RequestDuration.WithLabels("PUT", "api/{id}").NewTimer())
             {
-                channel.QueueDeclare(
-                    queue: "UpdateQueue",
-                    durable: true,
-                    exclusive: false,
-                    autoDelete: false,
-                    arguments: null);
+                using (var channel = factory.CreateConnection().CreateModel())
+                {
+                    channel.QueueDeclare(
+                        queue: "UpdateQueue",
+                        durable: true,
+                        exclusive: false,
+                        autoDelete: false,
+                        arguments: null);
 
-                channel.BasicPublish(
-                    exchange: "",
-                    routingKey: "UpdateQueue",
-                    basicProperties: null,
-                    body: Encoding.UTF8.GetBytes(JsonSerializer.Serialize(new Dictionary<int, Usuario> { { id, usuario } })));
+                    channel.BasicPublish(
+                        exchange: "",
+                        routingKey: "UpdateQueue",
+                        basicProperties: null,
+                        body: Encoding.UTF8.GetBytes(JsonSerializer.Serialize(new Dictionary<int, Usuario> { { id, usuario } })));
+                }
+
+                RequestCounter.WithLabels("GET", "api/{id}", Ok().StatusCode.ToString()).Inc();
+
+                return Ok();
             }
-
-            return Ok();
         }
 
         [HttpDelete("{id}")]
@@ -136,6 +154,8 @@ namespace Gateway.Controllers
                         basicProperties: null,
                         body: Encoding.UTF8.GetBytes(JsonSerializer.Serialize(id)));
                 }
+
+                RequestCounter.WithLabels("GET", "api/{id}", NoContent().StatusCode.ToString()).Inc();
 
                 return NoContent();
             }
