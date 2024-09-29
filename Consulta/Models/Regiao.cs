@@ -7,7 +7,7 @@ namespace Consulta.Models
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public required string Id { get; set; }
+        public string Id { get; set; }
 
         [BsonElement("idRegiao")]
         public int IdRegiao { get; set; }

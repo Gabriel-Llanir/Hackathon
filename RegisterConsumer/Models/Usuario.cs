@@ -7,7 +7,7 @@ namespace RegisterConsumer.Models
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public required string Id { get; set; }
+        public string Id { get; set; }
 
         [BsonElement("idUsuario")]
         public int IdUsuario { get; set; }

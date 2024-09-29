@@ -7,7 +7,7 @@ namespace Consulta.Models
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public required string Id { get; set; }
+        public string Id { get; set; }
 
         [BsonElement("idUsuario")]
         public int IdUsuario { get; set; }
@@ -25,6 +25,6 @@ namespace Consulta.Models
         public DateTime Atualizacao { get; set; }
 
         [BsonElement("sCodigoRegiao")]
-        public required string CodigoRegiao { get; set; }
+        public string CodigoRegiao { get; set; }
     }
 }

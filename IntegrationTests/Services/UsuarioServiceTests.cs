@@ -19,7 +19,7 @@ namespace IntegrationTests.Services
         public async Task AddUsuario_AddsUsuario()
         {
             var mockRepository = new Mock<RegisterRepository>();
-            var usuario = new RegisterUsuario { IdUsuario = 1, Nome = "Teste1", Telefone = "11999999999", Email = "teste1@example.com" };
+            var usuario = new RegisterUsuario { IdUsuario = 1, Nome = "Teste1", Telefone = "11999999999", Email = "teste1@example.com", CodigoRegiao = "SP" };
             mockRepository.Setup(repo => repo.AddAsync(usuario)).Returns(Task.CompletedTask);
             var service = new RegisterUsuarioService(mockRepository.Object);
 
@@ -45,7 +45,7 @@ namespace IntegrationTests.Services
         {
  
             var mockRepository = new Mock<UpdateRepository>();
-            var usuario = new UpdateUsuario { IdUsuario = 1, Nome = "Teste Atualizado", Telefone = "11999999999", Email = "teste.atualizado@example.com" };
+            var usuario = new UpdateUsuario { IdUsuario = 1, Nome = "Teste Atualizado", Telefone = "11999999999", Email = "teste.atualizado@example.com", CodigoRegiao = "SP" };
             mockRepository.Setup(repo => repo.UpdateAsync(usuario.IdUsuario, usuario)).Returns(Task.CompletedTask);
             var service = new UpdateUsuarioService(mockRepository.Object);
 
