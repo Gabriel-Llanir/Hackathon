@@ -101,9 +101,9 @@ namespace Gateway.Controllers
                         body: Encoding.UTF8.GetBytes(JsonSerializer.Serialize(usuario)));
                 }
 
-                RequestCounter.WithLabels("GET", "api", Created().StatusCode.ToString()).Inc();
+                RequestCounter.WithLabels("POST", "api", Ok().StatusCode.ToString()).Inc();
 
-                return Created();
+                return Ok();
             }
         }
 
@@ -128,7 +128,7 @@ namespace Gateway.Controllers
                         body: Encoding.UTF8.GetBytes(JsonSerializer.Serialize(new Dictionary<int, Usuario> { { id, usuario } })));
                 }
 
-                RequestCounter.WithLabels("GET", "api/{id}", Ok().StatusCode.ToString()).Inc();
+                RequestCounter.WithLabels("PUT", "api/{id}", Ok().StatusCode.ToString()).Inc();
 
                 return Ok();
             }
@@ -155,7 +155,7 @@ namespace Gateway.Controllers
                         body: Encoding.UTF8.GetBytes(JsonSerializer.Serialize(id)));
                 }
 
-                RequestCounter.WithLabels("GET", "api/{id}", NoContent().StatusCode.ToString()).Inc();
+                RequestCounter.WithLabels("DELETE", "api/{id}", NoContent().StatusCode.ToString()).Inc();
 
                 return NoContent();
             }
