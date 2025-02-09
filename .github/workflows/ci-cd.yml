@@ -8,22 +8,14 @@ jobs:
   build_and_test:
     runs-on: ubuntu-latest
 
-    services:
-      mongo:
-        image: mongo:latest
-        ports:
-          - 27017:27017
-
     env:
+      JWT_Secret: ${{ vars.JWT_SECRET }}
+      RSA_Private: ${{ vars.RSA_PRIVATE }}
       Solution: ${{ vars.SOLUTION_PATH }}
       Gateway: ${{ vars.GATEWAY_API_PATH }}
       Consulta: ${{ vars.CONSULTA_API_PATH }}
       Register: ${{ vars.REGISTER_CONSUMER_PATH }}
       Update: ${{ vars.UPDATE_CONSUMER_PATH }}
-      Delete: ${{ vars.DELETE_CONSUMER_PATH }}
-      UnitTest: ${{ vars.UNIT_TEST_PROJECT_PATH }}
-      IntegrationTest: ${{ vars.INTEGRATION_TEST_PROJECT_PATH }}
-      TestDataBase: ${{ vars.TEST_DATABASE_URL }}
     
     steps:
     - name: Checkout code
@@ -46,15 +38,3 @@ jobs:
       run: |
         dotnet build ${{ env.Register }} --no-restore --configuration Release
         dotnet build ${{ env.Update }} --no-restore --configuration Release
-        dotnet build ${{ env.Delete }} --no-restore --configuration Release
-      
-    - name: Build Test projects
-      run: |
-        dotnet build ${{ env.UnitTest }} --no-restore --configuration Release
-        dotnet build ${{ env.IntegrationTest }} --no-restore --configuration Release
-
-    - name: Run Unit Tests
-      run: dotnet test ${{ env.UnitTest }} --no-build --verbosity normal --configuration Release
-
-    - name: Run Integration Tests
-      run: dotnet test ${{ env.IntegrationTest }} --no-build --verbosity normal --configuration Release

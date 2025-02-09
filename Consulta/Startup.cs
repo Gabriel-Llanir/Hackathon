@@ -10,10 +10,7 @@ namespace Consulta
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        public Startup(IConfiguration configuration) => Configuration = configuration;
 
         public IConfiguration Configuration { get; }
 
@@ -24,20 +21,18 @@ namespace Consulta
             services.AddFluentValidationAutoValidation()
                     .AddFluentValidationClientsideAdapters();
 
-            services.AddValidatorsFromAssemblyContaining<UsuarioValidator>();
+            services.AddValidatorsFromAssemblyContaining<MedicosValidator>();
+            services.AddValidatorsFromAssemblyContaining<PacientesValidator>();
 
             services.AddSingleton<DataContext>();
-            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-            services.AddScoped<IUsuarioService, UsuarioService>();
-            services.AddSingleton(sp => new MongoDBMigrations(sp.GetRequiredService<DataContext>().Database));
+            services.AddScoped<IConsultaRepository, ConsultaRepository>();
+            services.AddScoped<IConsultaService, ConsultaService>();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MongoDBMigrations migrations)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
 
             app.UseHttpsRedirection();
 
@@ -48,12 +43,7 @@ namespace Consulta
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-
-            migrations.SeedDataAsync().Wait();
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }

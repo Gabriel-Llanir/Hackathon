@@ -11,11 +11,13 @@ namespace RegisterConsumer
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IUsuarioService, UsuarioService>();
-            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<IRegisterService, RegisterService>();
+            services.AddScoped<IRegisterRepository, RegisterRepository>();
             services.AddScoped<DataContext>();
 
-            services.AddHostedService<Worker>();
+            services.AddHostedService<Medicos_Worker>();
+            services.AddHostedService<Pacientes_Worker>();
+            services.AddHostedService<Consultas_Worker>();
 
             services.AddAuthorization();
         }
