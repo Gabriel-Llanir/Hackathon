@@ -22,8 +22,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Display contents of Hackathon_API.sln
-      run: cat Hackathon_API.sln
+    - name: Print current working directory
+      run: pwd
+
+    - name: List directory structure
+      run: ls -R /home/runner/work/Hackathon
 
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v3
