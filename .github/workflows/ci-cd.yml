@@ -22,11 +22,8 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: List files in the repository
-      run: ls -R
-
-    - name: Print Gateway API Path
-      run: echo ${{ env.Gateway }}
+    - name: Display contents of Hackathon_API.sln
+      run: cat Hackathon_API.sln
 
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v3
