@@ -11,11 +11,10 @@ namespace Gateway.Services
 
         public JwtService()
         {
-            _secretKey = Environment.GetEnvironmentVariable("JWT_SECRET");
+            _secretKey = Environment.GetEnvironmentVariable("JWT_Secret");
 
             if (string.IsNullOrEmpty(_secretKey))
-                _secretKey = "2d7752a7f0adfbe9b3e4cdad0bad5a7eff9b08df46ece60a7e69df18a73eec6987f237ce182aeba74a4a765cb7d85e96fc6cb616512370a9f179a58a93666ee58c9aba680594aaec6d48c97539aa935ae37c0d22931e74261c916923fe9c2e4b16acc65fa21d5439e79d17b763688a87d7b7aab545fd0754c10b478dee7c9372ae2f7bd54298417f75a275abeeac05fee7d0d05bbb3b3d41d5c74804d742e2dde0ec8057f2e8eafaa8dd166cf36e9763a2bbf3bc4ba97f000158ff515e00527465cfc6bbf1fd57246ce1a288c54508b921baf8743fa13259fb337753dffcf584b77f64b73fff53ccbd4b5a60eb6b5d045d5bc2dea1d900bfd22e274ddda7d20e";
-                //throw new InvalidOperationException("JWT_SECRET não está definido.");
+            throw new InvalidOperationException("JWT_Secret não está definido.");
         }
 
         public string GerarToken_Login(string idUsuario, string idLogin, int idTipoUsuario) // idTipo: 1 = Médico, 2 = Paciente
