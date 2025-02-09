@@ -28,7 +28,7 @@ jobs:
         dotnet-version: '8.x'
 
     - name: Restore dependencies
-      run: dotnet restore ${{ env.Solution }}
+      run: dotnet restore ./Hackathon_API.sln
 
     - name: Build API projects
       run: |
