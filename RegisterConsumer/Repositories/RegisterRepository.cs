@@ -1,7 +1,5 @@
 ﻿using RegisterConsumer.Data;
 using RegisterConsumer.Models;
-using System.Text.RegularExpressions;
-using ESPECIALIDADE = Gateway.Models.Especialidade;
 
 namespace RegisterConsumer.Repositories
 {

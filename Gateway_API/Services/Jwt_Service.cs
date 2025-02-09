@@ -14,7 +14,7 @@ namespace Gateway.Services
             _secretKey = Environment.GetEnvironmentVariable("JWT_Secret");
 
             if (string.IsNullOrEmpty(_secretKey))
-            throw new InvalidOperationException("JWT_Secret não está definido.");
+                throw new InvalidOperationException("JWT_Secret não está definido.");
         }
 
         public string GerarToken_Login(string idUsuario, string idLogin, int idTipoUsuario) // idTipo: 1 = Médico, 2 = Paciente
@@ -57,7 +57,7 @@ namespace Gateway.Services
                 var principal = tokenHandler.ValidateToken(token, validationParameters, out SecurityToken validatedToken);
 
                 var idTipoUsuario = principal.Claims.FirstOrDefault(c => c.Type == "idTipoUsuario");
-                
+
                 if (filtro_idTipo == null || (idTipoUsuario != null && idTipoUsuario.Value == filtro_idTipo))
                     return true;
 

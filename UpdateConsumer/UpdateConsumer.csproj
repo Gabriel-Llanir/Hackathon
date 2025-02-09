@@ -14,6 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ContatosAPI\Gateway.csproj" />
+    <ProjectReference Include="..\Gateway_API\Gateway.csproj" />
   </ItemGroup>
 </Project>
