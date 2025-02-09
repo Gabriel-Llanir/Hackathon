@@ -22,19 +22,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Print current working directory
-      run: pwd
-
-    - name: List directory structure
-      run: ls -R /home/runner/work/Hackathon
-
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '7.x'
 
     - name: Restore dependencies
-      run: dotnet restore ${{ env.Solution }}
+      run: dotnet restore ./Hackathon_API.sln
 
     - name: Build API projects
       run: |
