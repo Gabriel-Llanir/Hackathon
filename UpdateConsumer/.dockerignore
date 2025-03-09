@@ -6,6 +6,7 @@ node_modules/
 .idea/
 
 # Ignorar arquivos de configuração local
+**/appsettings.json
 **/appsettings.Development.json
 **/appsettings.Local.json
 
