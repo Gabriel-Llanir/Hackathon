@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: update-api
+  labels:
+    app: update-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: update-api
+  template:
+    metadata:
+      labels:
+        app: update-api
+    spec:
+      containers:
+      - name: update-api
+        image: gabriel-llanir/update-api:latest
+        ports:
+        - containerPort: 80
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Production
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: jwt-secret
+        - name: RSA_PRIVATE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: rsa-private-key
+        - name: RSA_PUBLIC_KEY
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: rsa-public-key
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+      imagePullSecrets:
+      - name: regcred

@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consulta-api
+  labels:
+    app: consulta-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: consulta-api
+  template:
+    metadata:
+      labels:
+        app: consulta-api
+    spec:
+      containers:
+      - name: consulta-api
+        image: gabriel-llanir/consulta-api:latest
+        ports:
+        - containerPort: 80
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Production
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: jwt-secret
+        - name: RSA_PRIVATE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: rsa-private-key
+        - name: RSA_PUBLIC_KEY
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: rsa-public-key
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+      imagePullSecrets:
+      - name: regcred
