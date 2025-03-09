@@ -16,9 +16,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Gateway_API\Gateway.csproj" />
   </ItemGroup>
-
-	<ItemGroup>
-		<None Remove="..\Gateway_API\appsettings.json" />
-		<None Remove="..\Gateway_API\appsettings.Development.json" />
-	</ItemGroup>
 </Project>
