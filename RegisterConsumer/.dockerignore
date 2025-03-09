@@ -1,3 +1,10 @@
+# Ignorar diretórios de build e dependências desnecessárias
+bin/
+obj/
+node_modules/
+.vscode/
+.idea/
+
 # Ignorar arquivos de configuração local
 **/appsettings.json
 **/appsettings.Development.json
@@ -8,19 +15,10 @@
 *.tmp
 *.temp
 
-# Ignorar diretórios de build e dependências desnecessárias
-bin/
-obj/
-node_modules/
-.vscode/
-.idea/
-
 # Ignorar tudo, exceto o necessário
 *
 !src/
-!src/RegisterConsumer/
-!src/Gateway_API/
-!src/Gateway_API/bin/Release/net8.0/
-!src/Gateway_API/bin/Release/net8.0/Gateway_API.dll
+!RegisterConsumer/
+!Gateway_API/
 !Dockerfile
 !.dockerignore
