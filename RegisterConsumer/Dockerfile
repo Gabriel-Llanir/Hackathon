@@ -9,6 +9,7 @@ RUN dotnet restore "./RegisterConsumer/RegisterConsumer.csproj"
 RUN dotnet build "./RegisterConsumer/RegisterConsumer.csproj" -c Release -o /app/build
 
 FROM build AS publish
+RUN dotnet nuget locals all --clear
 RUN dotnet publish "./RegisterConsumer/RegisterConsumer.csproj" -c Release -o /app/publish
 
 FROM base AS final
