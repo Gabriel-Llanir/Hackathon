@@ -64,7 +64,7 @@ jobs:
     - name: Configure Kubernetes
       run: |
         echo "${{ env.Kube }}" > kubeconfig.yaml
-        export KUBECONFIG=kubeconfig.yaml
+        echo "KUBECONFIG=$(pwd)/kubeconfig.yaml" >> $GITHUB_ENV
 
     - name: Verify Kubernetes access
       run: |
