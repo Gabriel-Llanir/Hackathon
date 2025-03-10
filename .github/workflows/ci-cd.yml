@@ -90,4 +90,4 @@ jobs:
         kubectl rollout undo deployment/gateway-api
         kubectl rollout undo deployment/consulta-api
         kubectl rollout undo deployment/register-consumer
-        kubectl rollout undo deployment/update-consumer 
+        kubectl rollout undo deployment/update-consumer
