@@ -10,11 +10,12 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      Kube: ${{ secrets.KUBE_CONFIG }}
+      Kube_Config: ${{ secrets.KUBE_CONFIG }}
       Docker_User: ${{ secrets.DOCKER_USERNAME }}
       Docker_Password: ${{ secrets.DOCKER_PASSWORD }}
       JWT_Secret: ${{ secrets.JWT_SECRET }}
       RSA_Private: ${{ secrets.RSA_PRIVATE_KEY }}
+      Kubernetes: ${{ vars.KUBE_PATH }}
       RSA_Public: ${{ vars.RSA_PUBLIC_KEY }}
       Solution: ${{ vars.SOLUTION_PATH }}
       Gateway: ${{ vars.GATEWAY_API_PATH }}
@@ -63,7 +64,7 @@ jobs:
 
     - name: Configure Kubernetes
       run: |
-        echo "${{ env.Kube }}" > kubeconfig.yaml
+        echo "${{ env.Kube_Config }}" > kubeconfig.yaml
         echo "KUBECONFIG=$(pwd)/kubeconfig.yaml" >> $GITHUB_ENV
 
     - name: Verify Kubernetes access
@@ -72,17 +73,17 @@ jobs:
 
     - name: Validate Kubernetes manifests
       run: |
-        kubectl apply --dry-run=client -f ./kubernetes/gateway-deployment.yaml
-        kubectl apply --dry-run=client -f ./kubernetes/consulta-deployment.yaml
-        kubectl apply --dry-run=client -f ./kubernetes/register-consumer-deployment.yaml
-        kubectl apply --dry-run=client -f ./kubernetes/update-consumer-deployment.yaml
+        kubectl apply --dry-run=client -f ${{ env.Kubernetes }}/gateway-deploy.yaml
+        kubectl apply --dry-run=client -f ${{ env.Kubernetes }}/consulta-deploy.yaml
+        kubectl apply --dry-run=client -f ${{ env.Kubernetes }}/register-consumer-deploy.yaml
+        kubectl apply --dry-run=client -f ${{ env.Kubernetes }}/update-consumer-deploy.yaml
 
     - name: Deploy to Kubernetes
       run: |
-        kubectl apply -f ./kubernetes/gateway-deployment.yaml
-        kubectl apply -f ./kubernetes/consulta-deployment.yaml
-        kubectl apply -f ./kubernetes/register-consumer-deployment.yaml
-        kubectl apply -f ./kubernetes/update-consumer-deployment.yaml
+        kubectl apply -f ${{ env.Kubernetes }}/gateway-deploy.yaml
+        kubectl apply -f ${{ env.Kubernetes }}/consulta-deploy.yaml
+        kubectl apply -f ${{ env.Kubernetes }}/register-consumer-deploy.yaml
+        kubectl apply -f ${{ env.Kubernetes }}/update-consumer-deploy.yaml
 
     - name: Rollback on failure
       if: failure()
