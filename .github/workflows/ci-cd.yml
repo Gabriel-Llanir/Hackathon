@@ -72,17 +72,17 @@ jobs:
 
     - name: Validate Kubernetes manifests
       run: |
-        kubectl apply --dry-run=client -f kubernetes/gateway-deployment.yaml
-        kubectl apply --dry-run=client -f kubernetes/consulta-deployment.yaml
-        kubectl apply --dry-run=client -f kubernetes/register-consumer-deployment.yaml
-        kubectl apply --dry-run=client -f kubernetes/update-consumer-deployment.yaml
+        kubectl apply --dry-run=client -f ./kubernetes/gateway-deployment.yaml
+        kubectl apply --dry-run=client -f ./kubernetes/consulta-deployment.yaml
+        kubectl apply --dry-run=client -f ./kubernetes/register-consumer-deployment.yaml
+        kubectl apply --dry-run=client -f ./kubernetes/update-consumer-deployment.yaml
 
     - name: Deploy to Kubernetes
       run: |
-        kubectl apply -f kubernetes/gateway-deployment.yaml
-        kubectl apply -f kubernetes/consulta-deployment.yaml
-        kubectl apply -f kubernetes/register-consumer-deployment.yaml
-        kubectl apply -f kubernetes/update-consumer-deployment.yaml
+        kubectl apply -f ./kubernetes/gateway-deployment.yaml
+        kubectl apply -f ./kubernetes/consulta-deployment.yaml
+        kubectl apply -f ./kubernetes/register-consumer-deployment.yaml
+        kubectl apply -f ./kubernetes/update-consumer-deployment.yaml
 
     - name: Rollback on failure
       if: failure()
