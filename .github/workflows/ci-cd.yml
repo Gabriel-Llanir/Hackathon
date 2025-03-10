@@ -46,20 +46,20 @@ jobs:
 
     - name: Build Docker images
       run: |
-        docker build -t gabriel-llanir/gateway-api:latest -f ${{ env.Gateway }}/Dockerfile .
-        docker build -t gabriel-llanir/consulta-api:latest -f ${{ env.Consulta }}/Dockerfile .
-        docker build -t gabriel-llanir/register-consumer:latest -f ${{ env.Register }}/Dockerfile .
-        docker build -t gabriel-llanir/update-consumer:latest -f ${{ env.Update }}/Dockerfile .
+        docker build -t insanexurow10/gateway-api:latest -f ${{ env.Gateway }}/Dockerfile .
+        docker build -t insanexurow10/consulta-api:latest -f ${{ env.Consulta }}/Dockerfile .
+        docker build -t insanexurow10/register-consumer:latest -f ${{ env.Register }}/Dockerfile .
+        docker build -t insanexurow10/update-consumer:latest -f ${{ env.Update }}/Dockerfile .
 
     - name: Log in to Docker Registry
       run: echo "${{ env.Docker_Password }}" | docker login -u "${{ env.Docker_User }}" --password-stdin
 
     - name: Push Docker images
       run: |
-        docker push gabriel-llanir/gateway-api:latest
-        docker push gabriel-llanir/consulta-api:latest
-        docker push gabriel-llanir/register-consumer:latest
-        docker push gabriel-llanir/update-consumer:latest
+        docker push insanexurow10/gateway-api:latest
+        docker push insanexurow10/consulta-api:latest
+        docker push insanexurow10/register-consumer:latest
+        docker push insanexurow10/update-consumer:latest
 
     - name: Configure Kubernetes
       run: |
