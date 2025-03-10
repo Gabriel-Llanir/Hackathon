@@ -79,16 +79,9 @@ jobs:
         kubectl apply --dry-run=client -f ${{ env.Kubernetes }}/update-consumer-deploy.yaml
 
     - name: Deploy to Kubernetes
+      id: deploy
       run: |
-        kubectl apply -f ${{ env.Kubernetes }}/gateway-deploy.yaml
-        kubectl apply -f ${{ env.Kubernetes }}/consulta-deploy.yaml
-        kubectl apply -f ${{ env.Kubernetes }}/register-consumer-deploy.yaml
-        kubectl apply -f ${{ env.Kubernetes }}/update-consumer-deploy.yaml
-
-    - name: Rollback on failure
-      if: failure()
-      run: |
-        kubectl rollout undo deployment/gateway-api
-        kubectl rollout undo deployment/consulta-api
-        kubectl rollout undo deployment/register-consumer
-        kubectl rollout undo deployment/update-consumer
+        kubectl apply -f ${{ env.Kubernetes }}/gateway-deploy.yaml && \
+        kubectl apply -f ${{ env.Kubernetes }}/consulta-deploy.yaml && \
+        kubectl apply -f ${{ env.Kubernetes }}/register-deploy.yaml && \
+        kubectl apply -f ${{ env.Kubernetes }}/update-deploy.yaml
