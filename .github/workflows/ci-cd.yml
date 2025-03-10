@@ -75,11 +75,10 @@ jobs:
       run: |
         kubectl apply --dry-run=client -f ${{ env.Kubernetes }}/gateway-deploy.yaml
         kubectl apply --dry-run=client -f ${{ env.Kubernetes }}/consulta-deploy.yaml
-        kubectl apply --dry-run=client -f ${{ env.Kubernetes }}/register-consumer-deploy.yaml
-        kubectl apply --dry-run=client -f ${{ env.Kubernetes }}/update-consumer-deploy.yaml
+        kubectl apply --dry-run=client -f ${{ env.Kubernetes }}/register-deploy.yaml
+        kubectl apply --dry-run=client -f ${{ env.Kubernetes }}/update-deploy.yaml
 
     - name: Deploy to Kubernetes
-      id: deploy
       run: |
         kubectl apply -f ${{ env.Kubernetes }}/gateway-deploy.yaml && \
         kubectl apply -f ${{ env.Kubernetes }}/consulta-deploy.yaml && \
