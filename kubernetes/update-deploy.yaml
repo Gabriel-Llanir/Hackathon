@@ -1,22 +1,22 @@
-apiVersion: apps/v1
+consumerVersion: apps/v1
 kind: Deployment
 metadata:
-  name: update-api
+  name: update-consumer
   labels:
-    app: update-api
+    app: update-consumer
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: update-api
+      app: update-consumer
   template:
     metadata:
       labels:
-        app: update-api
+        app: update-consumer
     spec:
       containers:
-      - name: update-api
-        image: gabriel-llanir/update-api:latest
+      - name: update-consumer
+        image: insanexurow10/update-consumer:latest
         ports:
         - containerPort: 80
         env:

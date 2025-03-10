@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: register-api
+  name: register-consumer
   labels:
-    app: register-api
+    app: register-consumer
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: register-api
+      app: register-consumer
   template:
     metadata:
       labels:
-        app: register-api
+        app: register-consumer
     spec:
       containers:
-      - name: register-api
-        image: gabriel-llanir/register-api:latest
+      - name: register-consumer
+        image: insanexurow10/register-consumer:latest
         ports:
         - containerPort: 80
         env:

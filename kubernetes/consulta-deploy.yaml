@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: consulta-api
-        image: gabriel-llanir/consulta-api:latest
+        image: insanexurow10/consulta-api:latest
         ports:
         - containerPort: 80
         env:
