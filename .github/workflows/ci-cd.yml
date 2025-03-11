@@ -71,6 +71,13 @@ jobs:
       run: |
         kubectl get nodes
 
+    - name: Delete all nodes
+      run: kubectl delete nodes --all
+
+    - name: Wait for cluster to recreate nodes
+      run: |
+        sleep 60
+
     - name: Validate Kubernetes manifests
       run: |
         kubectl apply --dry-run=client -f ${{ env.Kubernetes }}/gateway-deploy.yaml
