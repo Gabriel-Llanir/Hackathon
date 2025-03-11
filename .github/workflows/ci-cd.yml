@@ -98,4 +98,4 @@ jobs:
         kubectl apply -f ${{ env.Kubernetes }}/register-deploy.yaml && \
         kubectl apply -f ${{ env.Kubernetes }}/register-service.yaml && \
         kubectl apply -f ${{ env.Kubernetes }}/update-deploy.yaml && \
-        kubectl apply -f ${{ env.Kubernetes }}/update-service.yaml
+        kubectl apply -f ${{ env.Kubernetes }}/update-service.yaml 
