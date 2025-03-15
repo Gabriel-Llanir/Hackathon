@@ -4,7 +4,7 @@ metadata:
   name: rabbitmq-service
 spec:
   selector:
-    app: rabbitmq
+    app: rabbitmq-service
   ports:
     - protocol: TCP
       port: 5672
