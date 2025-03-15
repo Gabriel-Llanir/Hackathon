@@ -35,7 +35,7 @@ namespace Gateway.Controllers
 
         private readonly ConnectionFactory factory = new()
         {
-            HostName = "rabbitmq-service",
+            HostName = "rabbitmq",
             UserName = "guest",
             Password = "guest",
         };
