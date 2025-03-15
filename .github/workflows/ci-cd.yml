@@ -98,6 +98,8 @@ jobs:
         kubectl apply --dry-run=client -f ${{ env.Kubernetes }}/register-service.yaml
         kubectl apply --dry-run=client -f ${{ env.Kubernetes }}/update-deploy.yaml
         kubectl apply --dry-run=client -f ${{ env.Kubernetes }}/update-service.yaml
+        kubectl apply --dry-run=client -f ${{ env.Kubernetes }}/rabbitmq-deploy.yaml
+        kubectl apply --dry-run=client -f ${{ env.Kubernetes }}/rabbitmq-service.yaml
       
     - name: Deploy to Kubernetes
       run: |
@@ -108,4 +110,6 @@ jobs:
         kubectl apply -f ${{ env.Kubernetes }}/register-deploy.yaml && \
         kubectl apply -f ${{ env.Kubernetes }}/register-service.yaml && \
         kubectl apply -f ${{ env.Kubernetes }}/update-deploy.yaml && \
-        kubectl apply -f ${{ env.Kubernetes }}/update-service.yaml
+        kubectl apply -f ${{ env.Kubernetes }}/update-service.yaml && \
+        kubectl apply -f ${{ env.Kubernetes }}/rabbitmq-deploy.yaml && \
+        kubectl apply -f ${{ env.Kubernetes }}/rabbitmq-service.yaml
