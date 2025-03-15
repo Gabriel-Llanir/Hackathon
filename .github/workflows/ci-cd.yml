@@ -112,4 +112,4 @@ jobs:
         kubectl apply -f ${{ env.Kubernetes }}/update-deploy.yaml && \
         kubectl apply -f ${{ env.Kubernetes }}/update-service.yaml && \
         kubectl apply -f ${{ env.Kubernetes }}/rabbitmq-deploy.yaml && \
-        kubectl apply -f ${{ env.Kubernetes }}/rabbitmq-service.yaml 
+        kubectl apply -f ${{ env.Kubernetes }}/rabbitmq-service.yaml
