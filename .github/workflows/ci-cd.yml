@@ -47,7 +47,7 @@ jobs:
 
     - name: Build Docker images
       run: |
-        docker build -t ${{ env.Docker_User }}/mongo-db:latest -f ${{ env.Kubernetes }}/mongodb/Dockerfile .
+        docker build -t ${{ env.Docker_User }}/mongo-db:latest -f ${{ env.Kubernetes }}/mongodb/Dockerfile ${{ env.Kubernetes }}/mongodb/
         docker build -t ${{ env.Docker_User }}/gateway-api:latest -f ${{ env.Gateway }}/Dockerfile .
         docker build -t ${{ env.Docker_User }}/consulta-api:latest -f ${{ env.Consulta }}/Dockerfile .
         docker build -t ${{ env.Docker_User }}/register-consumer:latest -f ${{ env.Register }}/Dockerfile .
