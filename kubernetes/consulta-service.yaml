@@ -4,7 +4,7 @@ metadata:
   name: consulta-service
 spec:
   selector:
-    app: consulta-service
+    app: consulta-api
   ports:
     - protocol: TCP
       port: 80

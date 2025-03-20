@@ -4,7 +4,7 @@ metadata:
   name: gateway-service
 spec:
   selector:
-    app: gateway-service
+    app: gateway-api
   ports:
     - protocol: TCP
       port: 80

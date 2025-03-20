@@ -4,7 +4,7 @@ metadata:
   name: update-service
 spec:
   selector:
-    app: update-service
+    app: update-consumer
   ports:
     - protocol: TCP
       port: 80

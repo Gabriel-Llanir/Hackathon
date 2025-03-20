@@ -4,7 +4,7 @@ metadata:
   name: register-service
 spec:
   selector:
-    app: register-service
+    app: register-consumer
   ports:
     - protocol: TCP
       port: 80
