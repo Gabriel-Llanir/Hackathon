@@ -8,7 +8,7 @@ namespace Gateway
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>().UseUrls("http://localhost:7013");
+                    webBuilder.UseStartup<Startup>().UseUrls("http://0.0.0.0:7013");
                 });
     }
 }

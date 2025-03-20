@@ -3,10 +3,11 @@ kind: Service
 metadata:
   name: gateway-service
 spec:
-  selector:
-    app: gateway-api
+  type: LoadBalancer
+  externalTrafficPolicy: Local
   ports:
     - protocol: TCP
       port: 80
       targetPort: 7013
-  type: LoadBalancer
+  selector:
+    app: gateway-api
