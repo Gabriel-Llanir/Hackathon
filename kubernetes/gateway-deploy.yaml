@@ -18,7 +18,7 @@ spec:
       - name: gateway-api
         image: insanexurow10/gateway-api:latest
         ports:
-        - containerPort: 80
+        - containerPort: 7013
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: Production
