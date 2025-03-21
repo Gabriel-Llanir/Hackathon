@@ -5,7 +5,7 @@ namespace Gateway.Services
     public class GatewayService(HttpClient httpClient) : IGatewayService
     {
         private readonly HttpClient _httpClient = httpClient;
-        private readonly string _urlConsultaAPI = "https://localhost:5010";
+        private readonly string _urlConsultaAPI = "https://consulta-service";
 
         public async Task<IEnumerable<Medico>> Get_MedicosDisponiveis(string? id, string? data, string? especialidade)
         {
