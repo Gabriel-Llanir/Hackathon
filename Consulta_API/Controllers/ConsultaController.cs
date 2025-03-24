@@ -17,7 +17,7 @@ namespace Consulta.Controllers
 
         private readonly IConsultaService _consultaService = consultaService;
 
-        private static readonly string chavePrivada = Environment.GetEnvironmentVariable("RSA_Private");
+        private static readonly string chavePrivada = Environment.GetEnvironmentVariable("RSA_PRIVATE_KEY");
 
         #endregion
 

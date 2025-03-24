@@ -11,7 +11,7 @@ namespace Gateway.Services
 
         public JwtService()
         {
-            _secretKey = Environment.GetEnvironmentVariable("JWT_Secret");
+            _secretKey = Environment.GetEnvironmentVariable("JWT_SECRET");
 
             if (string.IsNullOrEmpty(_secretKey))
                 throw new InvalidOperationException("JWT_Secret não está definido.");

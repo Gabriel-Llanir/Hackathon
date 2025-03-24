@@ -7,7 +7,7 @@ spec:
   externalTrafficPolicy: Local
   ports:
     - protocol: TCP
-      port: 80
+      port: 7013
       targetPort: 7013
   selector:
     app: gateway-api

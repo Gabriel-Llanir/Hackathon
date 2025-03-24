@@ -27,7 +27,7 @@ namespace Gateway.Controllers
         private readonly IGatewayService _gatewayService = gatewayService;
         private readonly IJwtService _jwtService = jwtService;
 
-        private static readonly string chavePublica = Environment.GetEnvironmentVariable("RSA_Public");
+        private static readonly string chavePublica = Environment.GetEnvironmentVariable("RSA_PUBLIC_KEY");
 
         private static readonly string padraoCPF = @"^\d{3}\.\d{3}\.\d{3}-\d{2}$";
         private static readonly string padraoEmail = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
