@@ -31,6 +31,8 @@ namespace Gateway.Controllers
 
         private static readonly string padraoCPF = @"^\d{3}\.\d{3}\.\d{3}-\d{2}$";
         private static readonly string padraoEmail = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+
+
         private static readonly DateTime dataAmanha = DateTime.UtcNow.Date.AddDays(1).Date;
 
         private readonly ConnectionFactory factory = new()
