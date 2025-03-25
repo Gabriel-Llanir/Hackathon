@@ -12,7 +12,7 @@ using System.Security.Cryptography;
 using static Gateway.Models.MedicoDTO_Login;
 using static Gateway.Models.MedicoDTO_Consulta;
 using System.Text.RegularExpressions;
-
+ 
 namespace Gateway.Controllers
 {
     [Route("api")]
