@@ -21,7 +21,7 @@ spec:
         - containerPort: 80
         envFrom:
           - configMapRef:
-            name: mongo-config
+              name: mongo-config
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: Production
