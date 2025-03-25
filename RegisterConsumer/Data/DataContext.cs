@@ -9,7 +9,8 @@ namespace RegisterConsumer.Data
 
         public DataContext()
         {
-            var client = new MongoClient("mongodb://localhost:27017");
+            var connectionString = Environment.GetEnvironmentVariable("MONGO_CONNECTION") ?? "mongodb://mongo:27017";
+            var client = new MongoClient(connectionString);
             _database = client?.GetDatabase("Hackathon")!;
         }
 

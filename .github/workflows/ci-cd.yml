@@ -90,6 +90,11 @@ jobs:
     - name: Verify Kubernetes Secrets
       run: kubectl get secrets
 
+    - name: Create ConfigMap
+      run: |
+        kubectl delete configmap mongo-config --ignore-not-found
+        kubectl create configmap mongo-config --from-literal=MONGO_CONNECTION="mongodb://mongo:27017"
+
     - name: Validate Kubernetes manifests
       run: |
         kubectl apply --dry-run=client -f ${{ env.Kubernetes }}/gateway-deploy.yaml

@@ -19,6 +19,9 @@ spec:
         image: insanexurow10/register-consumer:latest
         ports:
         - containerPort: 80
+        envFrom:
+          - configMapRef:
+            name: mongo-config
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: Production

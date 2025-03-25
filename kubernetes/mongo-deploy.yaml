@@ -12,13 +12,14 @@ spec:
       labels:
         app: mongo
     spec:
+      restartPolicy: Always
       containers:
         - name: mongo
           image: insanexurow10/mongo-db:latest
           ports:
             - containerPort: 27017
 ---
-apiVersion: v1
+apiVersion: apps/v1
 kind: Service
 metadata:
   name: mongo
