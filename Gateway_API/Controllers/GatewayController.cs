@@ -31,7 +31,7 @@ namespace Gateway.Controllers
 
         private static readonly string padraoCPF = @"^\d{3}\.\d{3}\.\d{3}-\d{2}$";
         private static readonly string padraoEmail = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
-        private static readonly DateTime dataAmanha = DateTime.ParseExact(DateTime.Now.AddDays(1).ToString(), "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None);
+        private static readonly DateTime dataAmanha = DateTime.ParseExact(DateTime.Now.AddDays(1).ToString(), "dd/MM/yyyy HH:mm:ss", CultureInfo.GetCultureInfo("pt-BR"), DateTimeStyles.None);
 
         private readonly ConnectionFactory factory = new()
         {
@@ -86,7 +86,7 @@ namespace Gateway.Controllers
                 string? data = queryParams.ContainsKey("data") ? queryParams["data"].ToString() : null;
                 string? especialidade = queryParams.ContainsKey("especialidade") ? queryParams["especialidade"].ToString() : null;
 
-                if (!string.IsNullOrEmpty(data) && (!DateTime.TryParseExact(HttpUtility.UrlDecode(data), "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dataConvertida) || dataConvertida < dataAmanha))
+                if (!string.IsNullOrEmpty(data) && (!DateTime.TryParseExact(HttpUtility.UrlDecode(data), "dd/MM/yyyy HH:mm:ss", CultureInfo.GetCultureInfo("pt-BR"), DateTimeStyles.None, out DateTime dataConvertida) || dataConvertida < dataAmanha))
                 {
                     RequestCounter.WithLabels("GET", "api/Medicos", BadRequest().StatusCode.ToString()).Inc();
 
@@ -422,7 +422,7 @@ namespace Gateway.Controllers
                     return BadRequest("O ID do médico é obrigatório!");
                 }
 
-                if (!DateTime.TryParseExact(agendar_Consulta.DtAgendada, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime data) || data <= dataAmanha)
+                if (!DateTime.TryParseExact(agendar_Consulta.DtAgendada, "dd/MM/yyyy HH:mm:ss", CultureInfo.GetCultureInfo("pt-BR"), DateTimeStyles.None, out DateTime data) || data <= dataAmanha)
                 {
                     RequestCounter.WithLabels("POST", "api/Consultas/Agendar", BadRequest().StatusCode.ToString()).Inc();
 
