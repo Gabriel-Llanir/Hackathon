@@ -31,7 +31,7 @@ namespace Gateway.Controllers
 
         private static readonly string padraoCPF = @"^\d{3}\.\d{3}\.\d{3}-\d{2}$";
         private static readonly string padraoEmail = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
-        private static readonly DateTime dataAmanha = DateTime.ParseExact(DateTime.Now.AddDays(1).ToString(), "dd/MM/yyyy HH:mm:ss", CultureInfo.GetCultureInfo("pt-BR"), DateTimeStyles.None);
+        private static readonly DateTime dataAmanha = DateTime.UtcNow.Date.AddDays(1);
 
         private readonly ConnectionFactory factory = new()
         {
@@ -62,7 +62,7 @@ namespace Gateway.Controllers
         #endregion
 
         #region | Endpoints
-
+         
         [HttpGet("Medicos")]
         public async Task<ActionResult<IEnumerable<Medico>>> Get_MedicosDisponiveis()
         {
