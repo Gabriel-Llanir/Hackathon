@@ -97,6 +97,8 @@ jobs:
 
     - name: Validate Kubernetes manifests
       run: |
+        kubectl apply --dry-run=client -f ${{ env.Kubernetes }}/rabbitmq-deploy.yaml
+        kubectl apply --dry-run=client -f ${{ env.Kubernetes }}/mongo-deploy.yaml
         kubectl apply --dry-run=client -f ${{ env.Kubernetes }}/gateway-deploy.yaml
         kubectl apply --dry-run=client -f ${{ env.Kubernetes }}/gateway-service.yaml
         kubectl apply --dry-run=client -f ${{ env.Kubernetes }}/consulta-deploy.yaml
@@ -105,12 +107,11 @@ jobs:
         kubectl apply --dry-run=client -f ${{ env.Kubernetes }}/register-service.yaml
         kubectl apply --dry-run=client -f ${{ env.Kubernetes }}/update-deploy.yaml
         kubectl apply --dry-run=client -f ${{ env.Kubernetes }}/update-service.yaml
-        kubectl apply --dry-run=client -f ${{ env.Kubernetes }}/rabbitmq-deploy.yaml
-        kubectl apply --dry-run=client -f ${{ env.Kubernetes }}/rabbitmq-service.yaml
-        kubectl apply --dry-run=client -f ${{ env.Kubernetes }}/mongo-deploy.yaml
       
     - name: Deploy to Kubernetes
       run: |
+        kubectl apply -f ${{ env.Kubernetes }}/rabbitmq-deploy.yaml && \
+        kubectl apply -f ${{ env.Kubernetes }}/mongo-deploy.yaml && \
         kubectl apply -f ${{ env.Kubernetes }}/gateway-deploy.yaml && \
         kubectl apply -f ${{ env.Kubernetes }}/gateway-service.yaml && \
         kubectl apply -f ${{ env.Kubernetes }}/consulta-deploy.yaml && \
@@ -118,7 +119,4 @@ jobs:
         kubectl apply -f ${{ env.Kubernetes }}/register-deploy.yaml && \
         kubectl apply -f ${{ env.Kubernetes }}/register-service.yaml && \
         kubectl apply -f ${{ env.Kubernetes }}/update-deploy.yaml && \
-        kubectl apply -f ${{ env.Kubernetes }}/update-service.yaml && \
-        kubectl apply -f ${{ env.Kubernetes }}/rabbitmq-deploy.yaml && \
-        kubectl apply -f ${{ env.Kubernetes }}/rabbitmq-service.yaml && \
-        kubectl apply -f ${{ env.Kubernetes }}/mongo-deploy.yaml
+        kubectl apply -f ${{ env.Kubernetes }}/update-service.yaml

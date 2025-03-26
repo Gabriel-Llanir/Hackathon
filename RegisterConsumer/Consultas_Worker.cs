@@ -17,7 +17,7 @@ namespace RegisterConsumer
         {
             _serviceProvider = serviceProvider;
 
-            var factory = new ConnectionFactory() { HostName = "rabbitmq", UserName = "guest", Password = "guest" };
+            var factory = new ConnectionFactory() { HostName = "rabbitmq", UserName = "guest", Password = "guest", RequestedHeartbeat = TimeSpan.FromSeconds(30), AutomaticRecoveryEnabled = true, NetworkRecoveryInterval = TimeSpan.FromSeconds(10) };
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
         }
