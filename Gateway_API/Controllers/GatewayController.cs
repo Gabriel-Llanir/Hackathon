@@ -180,7 +180,7 @@ namespace Gateway.Controllers
                 string senha = Convert.ToBase64String(rsa.Encrypt(Encoding.UTF8.GetBytes(login.senha), false));
 
                 var medicoLogado = await _gatewayService.Get_LoginMedico(login.login, senha);
-
+                Console.WriteLine("Médico: " + medicoLogado);
                 if (medicoLogado == null)
                 {
                     RequestCounter.WithLabels("GET", "api/Medicos/Login", NotFound().StatusCode.ToString()).Inc();
