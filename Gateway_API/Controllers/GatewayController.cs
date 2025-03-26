@@ -174,13 +174,15 @@ namespace Gateway.Controllers
             using (RequestDuration.WithLabels("GET", "api/Medicos/Login").NewTimer())
             {
                 var rsa = new RSACryptoServiceProvider();
+                Console.WriteLine(rsa);
                 byte[] publicKeyBytes = Convert.FromBase64String(chavePublica);
+                Console.WriteLine(chavePublica);
                 rsa.ImportSubjectPublicKeyInfo(publicKeyBytes, out _);
 
                 string senha = Convert.ToBase64String(rsa.Encrypt(Encoding.UTF8.GetBytes(login.senha), false));
-
+                Console.WriteLine(senha);
                 var medicoLogado = await _gatewayService.Get_LoginMedico(login.login, senha);
-
+                Console.WriteLine(medicoLogado);
                 if (medicoLogado == null)
                 {
                     RequestCounter.WithLabels("GET", "api/Medicos/Login", NotFound().StatusCode.ToString()).Inc();
@@ -189,7 +191,7 @@ namespace Gateway.Controllers
                 }
 
                 var jwtToken = _jwtService.GerarToken_Login(medicoLogado.IdMedico, Guid.NewGuid().ToString(), 1);
-
+                Console.WriteLine(jwtToken);
                 var medicoDTO = new MedicoDTO_Login
                 {
                     AuthToken = $"Bearer {jwtToken}",
