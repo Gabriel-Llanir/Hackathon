@@ -49,6 +49,8 @@ namespace Consulta.Models
         public decimal TotalConsulta { get; set; }
 
         public string Status { get; set; }
+
+        public string? MotivoCancelamento { get; set; }
     }
 
     #endregion

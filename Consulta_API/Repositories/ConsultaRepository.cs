@@ -161,7 +161,8 @@ namespace Consulta.Repositories
                         Nome_Paciente = paciente.Nome,
                         DtAgendada = c.DtAgendada,
                         TotalConsulta = c.TotalConsulta,
-                        Status = c.Status
+                        Status = c.Status,
+                        MotivoCancelamento = c.MotivoCancelamento
                     });
                 });
             }
