@@ -34,6 +34,7 @@ namespace UpdateConsumer.Models
     {
         public string IdConsulta { get; set; }
         public string Status { get; set; }
+        public string? DataAgendada { get; set; }
         public string? MotivoCancelamento { get; set; }
     }
 }
