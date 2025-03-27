@@ -120,3 +120,21 @@ jobs:
         kubectl apply -f ${{ env.Kubernetes }}/register-service.yaml && \
         kubectl apply -f ${{ env.Kubernetes }}/update-deploy.yaml && \
         kubectl apply -f ${{ env.Kubernetes }}/update-service.yaml
+  restart_pods:
+    runs-on: ubuntu-latest
+    needs: build_and_test
+    steps:
+      - name: Configure Kubernetes
+        run: |
+          echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig.yaml
+          echo "KUBECONFIG=$(pwd)/kubeconfig.yaml" >> $GITHUB_ENV
+
+      - name: Restart all deployments
+        run: |
+          kubectl get deployments -o name | xargs kubectl rollout restart
+
+      - name: Wait for pods to restart
+        run: sleep 30
+          
+      - name: Verify pod restart
+        run: kubectl get pods
