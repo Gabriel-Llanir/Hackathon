@@ -24,6 +24,7 @@ jobs:
       Consulta: ${{ vars.CONSULTA_API_PATH }}
       Register: ${{ vars.REGISTER_CONSUMER_PATH }}
       Update: ${{ vars.UPDATE_CONSUMER_PATH }}
+      Tests: ${{ vars.TESTS_PATH }}
     
     steps:
     - name: Checkout code
@@ -46,6 +47,12 @@ jobs:
       run: |
         dotnet build ${{ env.Register }}/RegisterConsumer.csproj --no-restore --configuration Release
         dotnet build ${{ env.Update }}/UpdateConsumer.csproj --no-restore --configuration Release
+        
+    - name: Build Test projects
+      run: dotnet build ${{ env.Tests }}/UnitTests.csproj --no-restore --configuration Release
+
+    - name: Run Tests
+      run: dotnet test ${{ env.Tests }}/UnitTests.csproj --no-build --configuration Release --logger "trx;LogFileName=test_results.trx"
 
     - name: Build Docker images
       run: |
