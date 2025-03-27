@@ -672,6 +672,27 @@ namespace Gateway.Controllers
                     return BadRequest("O ID da Consulta é obrigatório!");
                 }
 
+                if (!string.IsNullOrEmpty(consulta_Update.DataAgendada))
+                {
+                    if (!_jwtService.ValidarToken_Login(token, "2"))
+                    {
+                        RequestCounter.WithLabels("PUT", "api/Consultas/Update", Unauthorized().StatusCode.ToString()).Inc();
+
+                        return Unauthorized("É necessário estar logado como Paciente para reagendar a Consulta!");
+                    }
+
+                    if (!DateTime.TryParseExact(consulta_Update.DataAgendada, "dd/MM/yyyy HH:mm:ss", CultureInfo.GetCultureInfo("pt-BR"), DateTimeStyles.None, out DateTime dataConvertida) || dataConvertida < dataAmanha)
+                    {
+                        RequestCounter.WithLabels("PUT", "api/Consultas/Update", BadRequest().StatusCode.ToString()).Inc();
+
+                        return BadRequest(dataConvertida < dataAmanha ? $"A data para reagendar a consulta deve ser ao menos dois dias após a data de hoje (mínimo: {dataAmanha})." : "Formato de data inválido (Válido: dd/MM/yyyy HH:mm:ss).");
+                    }
+
+                    consulta_Update.Status = "Em processamento";
+                    consulta_Update.MotivoCancelamento = "";
+                    goto ReagendarConsulta;
+                }
+
                 if (string.IsNullOrEmpty(consulta_Update.Status))
                 {
                     RequestCounter.WithLabels("PUT", "api/Consultas/Update", BadRequest().StatusCode.ToString()).Inc();
@@ -716,24 +737,7 @@ namespace Gateway.Controllers
                 else
                     return Unauthorized("O Status da Consulta deve ser uma das opções válidas: 'Agendada', Recusada', 'Cancelada'!");
 
-                if (!string.IsNullOrEmpty(consulta_Update.DataAgendada))
-                {
-                    if (!_jwtService.ValidarToken_Login(token, "2"))
-                    {
-                        RequestCounter.WithLabels("PUT", "api/Consultas/Update", Unauthorized().StatusCode.ToString()).Inc();
-
-                        return Unauthorized("É necessário estar logado como Paciente para reagendar a Consulta!");
-                    }
-
-                    if (!DateTime.TryParseExact(consulta_Update.DataAgendada, "dd/MM/yyyy HH:mm:ss", CultureInfo.GetCultureInfo("pt-BR"), DateTimeStyles.None, out DateTime dataConvertida) || dataConvertida < dataAmanha)
-                    {
-                        RequestCounter.WithLabels("PUT", "api/Consultas/Update", BadRequest().StatusCode.ToString()).Inc();
-
-                        return BadRequest(dataConvertida < dataAmanha ? $"A data para reagendar a consulta deve ser ao menos dois dias após a data de hoje (mínimo: {dataAmanha})." : "Formato de data inválido (Válido: dd/MM/yyyy HH:mm:ss).");
-                    }
-
-                    consulta_Update.Status = "Em processamento";
-                }
+                ReagendarConsulta:
 
                 using (var channel = factory.CreateConnection().CreateModel())
                 {

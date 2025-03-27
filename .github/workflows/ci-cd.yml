@@ -129,9 +129,12 @@ jobs:
           echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig.yaml
           echo "KUBECONFIG=$(pwd)/kubeconfig.yaml" >> $GITHUB_ENV
 
-      - name: Restart all deployments
+      - name: Restart Pods
         run: |
-          kubectl get deployments -o name | xargs kubectl rollout restart
+          kubectl rollout restart gateway-api
+          kubectl rollout restart consulta-api
+          kubectl rollout restart register-consumer
+          kubectl rollout restart update-consumer
 
       - name: Wait for pods to restart
         run: sleep 30
