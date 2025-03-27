@@ -17,7 +17,7 @@ namespace RegisterConsumer.Email
             string smtpServer = "smtp.gmail.com";
             int smtpPort = 587;
             string senderEmail = "hackathon.subs@gmail.com";
-            string senderPassword = "ProjetoHackathon10";
+            string senderPassword = "anjn fihy jfgq eveo";
 
             var builder_Medico = Builders<Medico>.Filter;
             var filtro_Medico = builder_Medico.And(
