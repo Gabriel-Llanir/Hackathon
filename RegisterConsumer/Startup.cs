@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using RegisterConsumer.Repositories;
 using RegisterConsumer.Data;
+using RegisterConsumer.Email;
 
 namespace RegisterConsumer
 {
@@ -11,6 +12,7 @@ namespace RegisterConsumer
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IEmail, Email.Email>();
             services.AddScoped<IRegisterService, RegisterService>();
             services.AddScoped<IRegisterRepository, RegisterRepository>();
             services.AddScoped<DataContext>();
