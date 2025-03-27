@@ -131,10 +131,10 @@ jobs:
 
       - name: Restart Pods
         run: |
-          kubectl rollout restart gateway-api
-          kubectl rollout restart consulta-api
-          kubectl rollout restart register-consumer
-          kubectl rollout restart update-consumer
+          kubectl rollout restart deployment gateway-api
+          kubectl rollout restart deployment consulta-api
+          kubectl rollout restart deployment register-consumer
+          kubectl rollout restart deployment update-consumer
 
       - name: Wait for pods to restart
         run: sleep 30
