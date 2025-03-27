@@ -33,7 +33,7 @@ namespace UnitTests.Tests
         }
 
         [Fact]
-        public async Task Get_MedicosDisponiveis_ReturnsMedicos_WhenIdIsProvided()
+        public async Task Get_MedicosDisponiveis_ReturnsMedicos()
         {
             var medicoId = "123";
             var medicos = new List<Consulta_Models_Medico> { new Consulta_Models_Medico { IdMedico = medicoId, Ativo = "S" } };
@@ -44,7 +44,7 @@ namespace UnitTests.Tests
                 .SetupSequence(_ => _.MoveNext(It.IsAny<CancellationToken>()))
                 .Returns(true)
                 .Returns(false);
-            mockCollection.Setup(c => c.FindAsync(It.IsAny<FilterDefinition<Consulta_Models_Medico>>(), null, default))
+            mockCollection.Setup(c => c.FindAsync(It.IsAny<FilterDefinition<Consulta_Models_Medico>>(), It.IsAny<FindOptions<Consulta_Models_Medico>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(mockCursor.Object);
             _mockContext.Setup(c => c.Medicos).Returns(mockCollection.Object);
 
@@ -56,7 +56,7 @@ namespace UnitTests.Tests
         }
 
         [Fact]
-        public async Task Get_Consultas_ReturnsConsultas_WhenIdAndIdTipoAreProvided()
+        public async Task Get_Consultas_ReturnsConsultas()
         {
             var consultas = new List<Consulta_Models_Consulta>
             {
@@ -91,11 +91,11 @@ namespace UnitTests.Tests
                 .Returns(true)
                 .Returns(false);
 
-            mockConsultasCollection.Setup(c => c.FindAsync(It.IsAny<FilterDefinition<Consulta_Models_Consulta>>(), null, default))
+            mockConsultasCollection.Setup(c => c.FindAsync(It.IsAny<FilterDefinition<Consulta_Models_Consulta>>(), It.IsAny<FindOptions<Consulta_Models_Consulta>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(mockConsultasCursor.Object);
-            mockMedicosCollection.Setup(c => c.FindAsync(It.IsAny<FilterDefinition<Consulta_Models_Medico>>(), null, default))
+            mockMedicosCollection.Setup(c => c.FindAsync(It.IsAny<FilterDefinition<Consulta_Models_Medico>>(), It.IsAny<FindOptions<Consulta_Models_Medico>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(mockMedicosCursor.Object);
-            mockPacientesCollection.Setup(c => c.FindAsync(It.IsAny<FilterDefinition<Consulta_Models_Paciente>>(), null, default))
+            mockPacientesCollection.Setup(c => c.FindAsync(It.IsAny<FilterDefinition<Consulta_Models_Paciente>>(), It.IsAny<FindOptions<Consulta_Models_Paciente>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(mockPacientesCursor.Object);
 
             _mockContext.Setup(c => c.Consultas).Returns(mockConsultasCollection.Object);
@@ -110,7 +110,7 @@ namespace UnitTests.Tests
         }
 
         [Fact]
-        public async Task Get_ValorConsulta_Medico_ReturnsValorConsulta_WhenIdIsProvided()
+        public async Task Get_ValorConsulta_Medico_ReturnsValorConsulta()
         {
             var medicoId = "123";
             var medico = new Consulta_Models_Medico { IdMedico = medicoId, ValorConsulta = 100 };
@@ -121,7 +121,7 @@ namespace UnitTests.Tests
                 .SetupSequence(_ => _.MoveNext(It.IsAny<System.Threading.CancellationToken>()))
                 .Returns(true)
                 .Returns(false);
-            mockCollection.Setup(c => c.FindAsync(It.IsAny<FilterDefinition<Consulta_Models_Medico>>(), null, default))
+            mockCollection.Setup(c => c.FindAsync(It.IsAny<FilterDefinition<Consulta_Models_Medico>>(), It.IsAny<FindOptions<Consulta_Models_Medico>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(mockCursor.Object);
             _mockContext.Setup(c => c.Medicos).Returns(mockCollection.Object);
 
@@ -132,7 +132,7 @@ namespace UnitTests.Tests
         }
 
         [Fact]
-        public async Task Get_LoginMedico_ReturnsMedico_WhenCredentialsAreValid()
+        public async Task Get_LoginMedico_ReturnsMedico()
         {
             var crm = "123";
             var senha = "senha";
@@ -145,7 +145,7 @@ namespace UnitTests.Tests
                 .SetupSequence(_ => _.MoveNext(It.IsAny<CancellationToken>()))
                 .Returns(true)
                 .Returns(false);
-            mockCollection.Setup(c => c.FindAsync(It.IsAny<FilterDefinition<Consulta_Models_Medico>>(), null, default))
+            mockCollection.Setup(c => c.FindAsync(It.IsAny<FilterDefinition<Consulta_Models_Medico>>(), It.IsAny<FindOptions<Consulta_Models_Medico>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(mockCursor.Object);
             _mockContext.Setup(c => c.Medicos).Returns(mockCollection.Object);
 
@@ -156,7 +156,7 @@ namespace UnitTests.Tests
         }
 
         [Fact]
-        public async Task Get_LoginPaciente_ReturnsPaciente_WhenCredentialsAreValid()
+        public async Task Get_LoginPaciente_ReturnsPaciente()
         {
             var login = "email@teste.com";
             var senha = "senha";
@@ -169,7 +169,7 @@ namespace UnitTests.Tests
                 .SetupSequence(_ => _.MoveNext(It.IsAny<CancellationToken>()))
                 .Returns(true)
                 .Returns(false);
-            mockCollection.Setup(c => c.FindAsync(It.IsAny<FilterDefinition<Consulta_Models_Paciente>>(), null, default))
+            mockCollection.Setup(c => c.FindAsync(It.IsAny<FilterDefinition<Consulta_Models_Paciente>>(), It.IsAny<FindOptions<Consulta_Models_Paciente>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(mockCursor.Object);
             _mockContext.Setup(c => c.Pacientes).Returns(mockCollection.Object);
 
@@ -202,7 +202,7 @@ namespace UnitTests.Tests
 
             await _repository.AddAsync(medico);
 
-            mockCollection.Verify(c => c.InsertOneAsync(medico, null, default), Times.Once);
+            mockCollection.Verify(c => c.InsertOneAsync(medico, It.IsAny<InsertOneOptions>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Fact]
@@ -214,7 +214,7 @@ namespace UnitTests.Tests
 
             await _repository.AddAsync(paciente);
 
-            mockCollection.Verify(c => c.InsertOneAsync(paciente, null, default), Times.Once);
+            mockCollection.Verify(c => c.InsertOneAsync(paciente, It.IsAny<InsertOneOptions>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Fact]
@@ -226,7 +226,7 @@ namespace UnitTests.Tests
 
             await _repository.AddAsync(consulta);
 
-            mockCollection.Verify(c => c.InsertOneAsync(consulta, null, default), Times.Once);
+            mockCollection.Verify(c => c.InsertOneAsync(consulta, It.IsAny<InsertOneOptions>(), It.IsAny<CancellationToken>()), Times.Once);
             _mockEmail.Verify(e => e.EnviarEmail_Paciente(consulta), Times.Once);
         }
     }
@@ -253,7 +253,7 @@ namespace UnitTests.Tests
 
             await _repository.UpdateAsync(medico);
 
-            mockCollection.Verify(c => c.ReplaceOneAsync(It.IsAny<FilterDefinition<Update_Models_Medico>>(), medico, new ReplaceOptions(), default), Times.Once);
+            mockCollection.Verify(c => c.ReplaceOneAsync(It.IsAny<FilterDefinition<Update_Models_Medico>>(), medico, It.IsAny<ReplaceOptions>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Fact]
@@ -265,29 +265,36 @@ namespace UnitTests.Tests
 
             await _repository.UpdateAsync(paciente);
 
-            mockCollection.Verify(c => c.ReplaceOneAsync(It.IsAny<FilterDefinition<Update_Models_Paciente>>(), paciente, new ReplaceOptions(), default), Times.Once);
+            mockCollection.Verify(c => c.ReplaceOneAsync(It.IsAny<FilterDefinition<Update_Models_Paciente>>(), paciente, It.IsAny<ReplaceOptions>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Fact]
         public async Task UpdateAsync_Consulta_UpdatesConsultaInDatabaseAndSendsEmail()
         {
-            // Arrange
             var consulta = new Update_Models_ConsultaUpdate { IdConsulta = "789", Status = "agendada", DataAgendada = "01/01/2023 10:00:00", MotivoCancelamento = "Motivo" };
             var consultaOriginal = new Update_Models_Consulta { IdConsulta = "789", IdMedico = "123", IdPaciente = "456", DtAgendada = "01/01/2023 10:00:00", TotalConsulta = 100, Status = "Agendada" };
             var mockCollection = new Mock<IMongoCollection<Update_Models_Consulta>>();
             var mockCursor = new Mock<IAsyncCursor<Update_Models_Consulta>>();
+            var mockFindFluent = new Mock<IFindFluent<Update_Models_Consulta, Update_Models_Consulta>>();
             mockCursor.Setup(_ => _.Current).Returns(new List<Update_Models_Consulta> { consultaOriginal });
             mockCursor
                 .SetupSequence(_ => _.MoveNext(It.IsAny<CancellationToken>()))
                 .Returns(true)
                 .Returns(false);
-            mockCollection.Setup(c => c.Find(It.IsAny<FilterDefinition<Update_Models_Consulta>>(), null).FirstOrDefaultAsync(default))
+
+            mockFindFluent
+                .Setup(f => f.FirstOrDefaultAsync(It.IsAny<CancellationToken>()))
                 .ReturnsAsync(consultaOriginal);
+
+            mockCollection
+                .Setup(c => c.Find(It.IsAny<FilterDefinition<Update_Models_Consulta>>(), It.IsAny<FindOptions>()))
+                .Returns(mockFindFluent.Object);
+
             _mockContext.Setup(c => c.Consultas).Returns(mockCollection.Object);
 
             await _repository.UpdateAsync(consulta);
 
-            mockCollection.Verify(c => c.ReplaceOneAsync(It.IsAny<FilterDefinition<Update_Models_Consulta>>(), It.IsAny<Update_Models_Consulta>(), new ReplaceOptions(), default), Times.Once);
+            mockCollection.Verify(c => c.ReplaceOneAsync(It.IsAny<FilterDefinition<Update_Models_Consulta>>(), It.IsAny<Update_Models_Consulta>(), It.IsAny<ReplaceOptions>(), It.IsAny<CancellationToken>()), Times.Once);
             _mockEmail.Verify(e => e.EnviarEmail_Paciente(It.IsAny<Update_Models_Consulta>()), Times.Once);
         }
     }
