@@ -133,13 +133,13 @@ namespace Consulta.Repositories
                   builder.Eq(p => p.IdMedico, id)
                 : builder.Eq(p => p.IdPaciente, id);
 
-            filtro = builder.And(
-                filtro,
-                builder.Or(
-                    builder.Eq(p => p.Status, "Agendada"),
-                    builder.Eq(p => p.Status, "Em processamento")
-                )
-            );
+            //filtro = builder.And(
+            //    filtro,
+            //    builder.Or(
+            //        builder.Eq(p => p.Status, "Agendada"),
+            //        builder.Eq(p => p.Status, "Em processamento")
+            //    )
+            //);
 
             var consultas_Original = await _context.Consultas.Find(filtro).ToListAsync();
 

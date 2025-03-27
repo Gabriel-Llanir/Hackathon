@@ -26,6 +26,7 @@ namespace UpdateConsumer.Repositories
 
             consulta.Status = consulta.Status.Trim().ToLower();
             consulta_Original.Status = $"{char.ToUpper(consulta.Status[0])}{consulta.Status[1..]}";
+            consulta_Original.DtAgendada = string.IsNullOrEmpty(consulta.DataAgendada) ? consulta_Original.DtAgendada : consulta.DataAgendada;
             consulta_Original.MotivoCancelamento = consulta.MotivoCancelamento;
 
             await _context.Consultas.ReplaceOneAsync(c => c.IdConsulta == consulta_Original.IdConsulta, consulta_Original);
