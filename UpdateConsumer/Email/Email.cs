@@ -1,10 +1,10 @@
 ﻿using System.Net;
 using System.Net.Mail;
-using RegisterConsumer.Data;
-using RegisterConsumer.Models;
+using UpdateConsumer.Data;
+using UpdateConsumer.Models;
 using MongoDB.Driver;
 
-namespace RegisterConsumer.Email
+namespace UpdateConsumer.Email
 {
     public class Email : IEmail
     {
@@ -45,19 +45,17 @@ namespace RegisterConsumer.Email
                     mail.From = new MailAddress(senderEmail);
                     mail.To.Add(paciente.Email);
                     mail.IsBodyHtml = true;
-                    mail.Subject = "Notificação de Agendamento de Consulta";
+                    mail.Subject = "Alteração de Consulta";
                     mail.Body = @$"
                         <div style='font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;'>
                             <table align='center' width='600' style='background: #ffffff; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);'>
                                 <tr>
                                     <td style='text-align: center;'>
-                                        <h2 style='color: #333;'>Lembrete de Consulta</h2>
-                                        <p style='color: #666; font-size: 16px;'>Olá {paciente.Nome}, este é um lembrete sobre sua Consulta marcada com o Médico {medico.Nome}.</p>
+                                        <h2 style='color: #333;'>Atualização de Consulta</h2>
+                                        <p style='color: #666; font-size: 16px;'>Olá {paciente.Nome}, sua Consulta marcada com o Médico {medico.Nome} foi alterada!.</p>
                                         <p style='color: #666; font-size: 16px; font-weight: bold;'>Data: {data.Date:dd/MM/yyyy}</p>
                                         <p style='color: #666; font-size: 16px; font-weight: bold;'>Horário: {data.TimeOfDay}</p>
                                         <p style='color: #666; font-size: 16px; font-weight: bold;'>Status da Consulta: {consulta.Status}</p>
-                                        <br />
-                                        <p style='color: #666; font-size: 14px;'><b>Obs:</b> Caso hajam alterações no agendamento desta consulta, você será notificado via email.</p>
                                     </td>
                                 </tr>
                             </table>

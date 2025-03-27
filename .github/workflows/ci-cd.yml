@@ -15,6 +15,8 @@ jobs:
       Docker_Password: ${{ secrets.DOCKER_PASSWORD }}
       JWT_Secret: ${{ secrets.JWT_SECRET }}
       RSA_Private: ${{ secrets.RSA_PRIVATE_KEY }}
+      Email_Notification_Address: ${{ secrets.EMAIL_ADDRESS }}
+      Email_Notification_Password: ${{ secrets.EMAIL_PASSWORD }}
       Kubernetes: ${{ vars.KUBE_PATH }}
       RSA_Public: ${{ vars.RSA_PUBLIC_KEY }}
       Solution: ${{ vars.SOLUTION_PATH }}

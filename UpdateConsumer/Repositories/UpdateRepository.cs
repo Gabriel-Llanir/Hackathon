@@ -1,24 +1,18 @@
 ﻿using UpdateConsumer.Data;
 using UpdateConsumer.Models;
 using MongoDB.Driver;
+using UpdateConsumer.Email;
 
 namespace UpdateConsumer.Repositories
 {
-    public class UpdateRepository : IUpdateRepository
+    public class UpdateRepository(IEmail email, DataContext context) : IUpdateRepository
     {
-        private readonly DataContext _context;
+        private readonly IEmail _email = email;
+        private readonly DataContext _context = context;
 
-        public UpdateRepository(DataContext context) => _context = context;
+        public async Task UpdateAsync(Medico medico) => await _context.Medicos.ReplaceOneAsync(m => m.IdMedico.Equals(medico.IdMedico), medico);
 
-        public async Task UpdateAsync(Medico medico)
-        {
-            await _context.Medicos.ReplaceOneAsync(m => m.IdMedico.Equals(medico.IdMedico), medico);
-        }
-
-        public async Task UpdateAsync(Paciente paciente)
-        {
-            await _context.Pacientes.ReplaceOneAsync(p => p.IdPaciente == paciente.IdPaciente, paciente);
-        }
+        public async Task UpdateAsync(Paciente paciente) => await _context.Pacientes.ReplaceOneAsync(p => p.IdPaciente == paciente.IdPaciente, paciente);
 
         public async Task UpdateAsync(Consulta_Update consulta)
         {
@@ -30,6 +24,7 @@ namespace UpdateConsumer.Repositories
             consulta_Original.MotivoCancelamento = consulta.MotivoCancelamento;
 
             await _context.Consultas.ReplaceOneAsync(c => c.IdConsulta == consulta_Original.IdConsulta, consulta_Original);
+            await _email.EnviarEmail_Paciente(consulta_Original);
         }
     }
 }
