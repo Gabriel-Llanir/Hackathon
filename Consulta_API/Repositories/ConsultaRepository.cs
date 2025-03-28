@@ -149,6 +149,7 @@ namespace Consulta.Repositories
             await cursor_ConsultasOriginal.MoveNextAsync();
 
             List<Models.Consulta> consultas_Original = [.. cursor_ConsultasOriginal.Current];
+            Console.WriteLine(string.Format("Cursor: {0},        Consultas: {1}", cursor_ConsultasOriginal, consultas_Original));
 
             var consultas = new List<Consulta_DTO>();
 
