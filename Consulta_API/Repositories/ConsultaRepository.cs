@@ -29,7 +29,11 @@ namespace Consulta.Repositories
                     builder.Eq(m => m.IdMedico, id)
                 );
 
-                medicos = await _context.Medicos.Find(filtro).ToListAsync();
+                //medicos = await _context.Medicos.Find(filtro).ToListAsync();
+                var cursor = await _context.Medicos.FindAsync(filtro);
+                await cursor.MoveNextAsync();
+
+                medicos = [.. cursor.Current];
             }
             else if (data != null && especialidade != null)
             {
@@ -141,16 +145,24 @@ namespace Consulta.Repositories
             //    )
             //);
 
-            var consultas_Original = await _context.Consultas.Find(filtro).ToListAsync();
+            var cursor_ConsultasOriginal = await _context.Consultas.FindAsync(filtro);
+            await cursor_ConsultasOriginal.MoveNextAsync();
+
+            List<Models.Consulta> consultas_Original = [.. cursor_ConsultasOriginal.Current];
 
             var consultas = new List<Consulta_DTO>();
 
             if (consultas_Original != null && consultas_Original.Count > 0)
             {
-                consultas_Original.ForEach(c =>
+                consultas_Original.ForEach(async c =>
                 {
-                    var medico = _context.Medicos.Find(builder_Medico.Eq(m => m.IdMedico, c.IdMedico)).FirstOrDefault();
-                    var paciente = _context.Pacientes.Find(builder_Paciente.Eq(p => p.IdPaciente, c.IdPaciente)).FirstOrDefault();
+                    var cursor_medico = await _context.Medicos.FindAsync(builder_Medico.Eq(m => m.IdMedico, c.IdMedico));
+                    await cursor_medico.MoveNextAsync();
+                    var cursor_paciente = await _context.Pacientes.FindAsync(builder_Paciente.Eq(p => p.IdPaciente, c.IdPaciente));
+                    await cursor_paciente.MoveNextAsync();
+
+                    Medico medico = cursor_medico.Current.FirstOrDefault();
+                    Paciente paciente = cursor_paciente.Current.FirstOrDefault();
 
                     consultas.Add(new Consulta_DTO
                     {
@@ -178,7 +190,10 @@ namespace Consulta.Repositories
                 builder.Eq(p => p.IdMedico, id)
             );
 
-            var medico = await _context.Medicos.Find(filtro).FirstOrDefaultAsync();
+            var cursor_medico = await _context.Medicos.FindAsync(filtro);
+            await cursor_medico.MoveNextAsync();
+
+            var medico = cursor_medico.Current.FirstOrDefault();
 
             if (medico != null)
                 return medico.ValorConsulta.ToString();
@@ -195,7 +210,10 @@ namespace Consulta.Repositories
                 builder.Eq(p => p.CRM, crm)
             );
 
-            var medico = await _context.Medicos.Find(filtro).FirstOrDefaultAsync();
+            var cursor_medico = await _context.Medicos.FindAsync(filtro);
+            await cursor_medico.MoveNextAsync();
+
+            var medico = cursor_medico.Current.FirstOrDefault();
 
             if (medico != null && Verify(senha, medico.Senha, false, BCrypt.Net.HashType.SHA384))
                 return medico;
@@ -215,7 +233,10 @@ namespace Consulta.Repositories
                 )
             );
 
-            var paciente = await _context.Pacientes.Find(filtro).FirstOrDefaultAsync();
+            var cursor_paciente = await _context.Pacientes.FindAsync(filtro);
+            await cursor_paciente.MoveNextAsync();
+
+            var paciente = cursor_paciente.Current.FirstOrDefault();
 
             if (paciente != null && Verify(senha, paciente.Senha, false, BCrypt.Net.HashType.SHA384))
                 return paciente;

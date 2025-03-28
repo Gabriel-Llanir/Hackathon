@@ -23,8 +23,8 @@ namespace UnitTests.Tests
 {
     public class ConsultaRepositoryTests
     {
-        private readonly Mock<Consulta_Data> _mockContext;
-        private readonly Consulta_Repository _repository;
+        private Mock<Consulta_Data> _mockContext;
+        private Consulta_Repository _repository;
 
         public ConsultaRepositoryTests()
         {
@@ -281,15 +281,8 @@ namespace UnitTests.Tests
                 .SetupSequence(_ => _.MoveNext(It.IsAny<CancellationToken>()))
                 .Returns(true)
                 .Returns(false);
-
-            mockFindFluent
-                .Setup(f => f.FirstOrDefaultAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(consultaOriginal);
-
-            mockCollection
-                .Setup(c => c.Find(It.IsAny<FilterDefinition<Update_Models_Consulta>>(), It.IsAny<FindOptions>()))
-                .Returns(mockFindFluent.Object);
-
+            mockCollection.Setup(c => c.FindAsync(It.IsAny<FilterDefinition<Update_Models_Consulta>>(), It.IsAny<FindOptions<Update_Models_Consulta>>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(mockCursor.Object);
             _mockContext.Setup(c => c.Consultas).Returns(mockCollection.Object);
 
             await _repository.UpdateAsync(consulta);

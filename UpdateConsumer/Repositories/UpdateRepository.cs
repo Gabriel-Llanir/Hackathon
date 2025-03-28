@@ -16,7 +16,16 @@ namespace UpdateConsumer.Repositories
 
         public async Task UpdateAsync(Consulta_Update consulta)
         {
-            var consulta_Original = await _context.Consultas.Find(c => c.IdConsulta == consulta.IdConsulta).FirstOrDefaultAsync();
+            var builder = Builders<Consulta>.Filter;
+
+            var filtro = builder.And(
+                builder.Eq(p => p.IdConsulta, consulta.IdConsulta)
+            );
+
+            var cursor_consulta_Original = await _context.Consultas.FindAsync(filtro);
+            await cursor_consulta_Original.MoveNextAsync();
+
+            var consulta_Original = cursor_consulta_Original.Current.FirstOrDefault();
 
             consulta.Status = consulta.Status.Trim().ToLower();
             consulta_Original.Status = $"{char.ToUpper(consulta.Status[0])}{consulta.Status[1..]}";
