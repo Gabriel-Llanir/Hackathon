@@ -149,12 +149,13 @@ namespace Consulta.Repositories
             await cursor_ConsultasOriginal.MoveNextAsync();
 
             List<Models.Consulta> consultas_Original = [.. cursor_ConsultasOriginal.Current];
-            Console.WriteLine(string.Format("Cursor: {0},        Consultas: {1}", cursor_ConsultasOriginal, consultas_Original));
+            Console.WriteLine(string.Format("Primeira Consulta: {0}", consultas_Original.FirstOrDefault()));
 
             var consultas = new List<Consulta_DTO>();
 
             if (consultas_Original != null && consultas_Original.Count > 0)
             {
+                Console.WriteLine("--- chegou no foreach ---");
                 consultas_Original.ForEach(async c =>
                 {
                     var cursor_medico = await _context.Medicos.FindAsync(builder_Medico.Eq(m => m.IdMedico, c.IdMedico));
@@ -162,8 +163,12 @@ namespace Consulta.Repositories
                     var cursor_paciente = await _context.Pacientes.FindAsync(builder_Paciente.Eq(p => p.IdPaciente, c.IdPaciente));
                     await cursor_paciente.MoveNextAsync();
 
+                    Console.WriteLine("--- passou dos cursores de Médico e Paciente ---");
+
                     Medico medico = cursor_medico.Current.FirstOrDefault();
                     Paciente paciente = cursor_paciente.Current.FirstOrDefault();
+
+                    Console.WriteLine(string.Format("===== Médico: {0}, Paciente: {1} ===", medico, paciente));
 
                     consultas.Add(new Consulta_DTO
                     {
@@ -179,6 +184,7 @@ namespace Consulta.Repositories
                     });
                 });
             }
+            Console.WriteLine(string.Format("Consultas: {0}", consultas));
 
             return consultas;
         }
