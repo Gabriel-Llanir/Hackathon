@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using UpdateConsumer.Repositories;
 using UpdateConsumer.Data;
+using UpdateConsumer.Email;
 
 namespace UpdateConsumer
 {
@@ -11,6 +12,7 @@ namespace UpdateConsumer
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IEmail, Email.Email>();
             services.AddScoped<IUpdateService, UpdateService>();
             services.AddScoped<IUpdateRepository, UpdateRepository>();
             services.AddScoped<DataContext>();
