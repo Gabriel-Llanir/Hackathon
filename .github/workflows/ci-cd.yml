@@ -88,7 +88,9 @@ jobs:
         kubectl create secret generic app-secrets \
           --from-literal=jwt-secret='${{ env.JWT_Secret }}' \
           --from-literal=rsa-private-key='${{ env.RSA_Private }}' \
-          --from-literal=rsa-public-key='${{ env.RSA_Public }}'
+          --from-literal=rsa-public-key='${{ env.RSA_Public }}' \
+          --from-literal=email-address='${{ env.Email_Notification_Address }}' \
+          --from-literal=email-password='${{ env.Email_Notification_Password }}'
 
         kubectl create secret docker-registry regcred \
           --docker-server=docker.io \

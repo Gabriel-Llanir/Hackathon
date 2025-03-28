@@ -40,6 +40,16 @@ spec:
             secretKeyRef:
               name: app-secrets
               key: rsa-public-key
+        - name: EMAIL_ADDRESS
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: email-address
+        - name: EMAIL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: email-password
         resources:
           requests:
             memory: "256Mi"
