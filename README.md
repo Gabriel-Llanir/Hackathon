@@ -1,4 +1,4 @@
-# README - Arquitetura do Projeto
+# Arquitetura do Projeto
 
 ## Visão Geral
 Este repositório contém o sistema baseado em microsserviços desenvolvido em C#. O sistema é responsável pelo cadastro e gerenciamento de médicos e pacientes, utilizando Kubernetes para orquestração dos containers e RabbitMQ para comunicação assíncrona entre os serviços.
