@@ -32,7 +32,7 @@ namespace UpdateConsumer.Email
 
             var medico = await _context.Medicos.Find(filtro_Medico).FirstOrDefaultAsync();
             var paciente = await _context.Pacientes.Find(filtro_Paciente).FirstOrDefaultAsync();
-            DateTime.TryParse(consulta.DtAgendada, out DateTime data);
+            string status = consulta.Status.StartsWith("Can") ? $"{consulta.Status}</p><p style='color: #666; font-size: 16px; font-weight: bold;'>Motivo do Cancelamento: {consulta.MotivoCancelamento}" : consulta.Status;
 
             try
             {
@@ -45,7 +45,7 @@ namespace UpdateConsumer.Email
                     mail.From = new MailAddress(senderEmail);
                     mail.To.Add(paciente.Email);
                     mail.IsBodyHtml = true;
-                    mail.Subject = "Alteração de Consulta";
+                    mail.Subject = "Atualização de Consulta";
                     mail.Body = @$"
                         <div style='font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;'>
                             <table align='center' width='600' style='background: #ffffff; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);'>
@@ -53,21 +53,20 @@ namespace UpdateConsumer.Email
                                     <td style='text-align: center;'>
                                         <h2 style='color: #333;'>Atualização de Consulta</h2>
                                         <p style='color: #666; font-size: 16px;'>Olá {paciente.Nome}, sua Consulta marcada com o Médico {medico.Nome} foi alterada!.</p>
-                                        <p style='color: #666; font-size: 16px; font-weight: bold;'>Data: {data.Date:dd/MM/yyyy}</p>
-                                        <p style='color: #666; font-size: 16px; font-weight: bold;'>Horário: {data.TimeOfDay}</p>
-                                        <p style='color: #666; font-size: 16px; font-weight: bold;'>Status da Consulta: {consulta.Status}</p>
+                                        <p style='color: #666; font-size: 16px; font-weight: bold;'>Data e Hora: {consulta.DtAgendada}</p>
+                                        <p style='color: #666; font-size: 16px; font-weight: bold;'>Status da Consulta: {status}</p>
                                     </td>
                                 </tr>
                             </table>
                         </div>";
 
                     smtp.Send(mail);
-                    Console.WriteLine("Email enviado com sucesso!");
+                    Console.WriteLine("// -------------------- Email enviado com sucesso!");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Erro ao enviar email: {ex.Message}");
+                Console.WriteLine($"// -------------------- Erro ao enviar email: {ex.Message}");
             }
         }
     }

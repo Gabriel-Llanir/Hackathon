@@ -32,7 +32,7 @@ namespace RegisterConsumer.Email
 
             var medico = await _context.Medicos.Find(filtro_Medico).FirstOrDefaultAsync();
             var paciente = await _context.Pacientes.Find(filtro_Paciente).FirstOrDefaultAsync();
-            DateTime.TryParse(consulta.DtAgendada, out DateTime data);
+            string status = consulta.Status.StartsWith("Can") ? $"{consulta.Status}</p><p style='color: #666; font-size: 16px; font-weight: bold;'>Motivo do Cancelamento: {consulta.MotivoCancelamento}" : consulta.Status;
 
             try
             {
@@ -53,9 +53,8 @@ namespace RegisterConsumer.Email
                                     <td style='text-align: center;'>
                                         <h2 style='color: #333;'>Lembrete de Consulta</h2>
                                         <p style='color: #666; font-size: 16px;'>Olá {paciente.Nome}, este é um lembrete sobre sua Consulta marcada com o Médico {medico.Nome}.</p>
-                                        <p style='color: #666; font-size: 16px; font-weight: bold;'>Data: {data.Date:dd/MM/yyyy}</p>
-                                        <p style='color: #666; font-size: 16px; font-weight: bold;'>Horário: {data.TimeOfDay}</p>
-                                        <p style='color: #666; font-size: 16px; font-weight: bold;'>Status da Consulta: {consulta.Status}</p>
+                                        <p style='color: #666; font-size: 16px; font-weight: bold;'>Data e Hora: {consulta.DtAgendada}</p>
+                                        <p style='color: #666; font-size: 16px; font-weight: bold;'>Status da Consulta: {status}</p>
                                         <br />
                                         <p style='color: #666; font-size: 14px;'><b>Obs:</b> Caso hajam alterações no agendamento desta consulta, você será notificado via email.</p>
                                     </td>
