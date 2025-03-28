@@ -153,7 +153,7 @@ namespace Gateway.Controllers
                 }
 
                 var consultas = await _gatewayService.Get_Consultas(_jwtService.Get_idUsuario(token), _jwtService.Get_idTipoUsuario(token));
-                Console.WriteLine(string.Format("--- Consultas: {0}, Quantas: {1}, Alguma: {2} ---", consultas, consultas != null ? consultas.Count() : false, consultas != null ? consultas.Any() : false));
+
                 if (consultas != null && consultas.Any())
                 {
                     RequestCounter.WithLabels("GET", "api/Consultas", Ok().StatusCode.ToString()).Inc();
